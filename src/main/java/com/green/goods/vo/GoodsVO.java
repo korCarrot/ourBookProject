@@ -17,6 +17,7 @@ public class GoodsVO {
     private String goods_isbn;
     private String goods_delivery_price;
     private Date goods_delivery_date;
+
     private String goods_status;
     private String goods_intro;
     private String goods_writer_intro;
@@ -24,18 +25,12 @@ public class GoodsVO {
     private String goods_recommendation;
     private String goods_contents_order;
     private Date goods_padate;
-    private String goods_fileName;
+    private String fileName;
+
+
 
     public GoodsVO(){
 
-    }
-
-    public String getGoods_fileName() {
-        return goods_fileName;
-    }
-
-    public void setGoods_fileName(String goods_fileName) {
-        this.goods_fileName = goods_fileName;
     }
 
     public int getGoods_id() {
@@ -197,4 +192,13 @@ public class GoodsVO {
     public void setGoods_padate(Date goods_padate) {
         this.goods_padate = goods_padate;
     }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 }
+
