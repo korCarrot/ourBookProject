@@ -1,7 +1,10 @@
 package com.green.goods.vo;
 
+import org.springframework.stereotype.Component;
+
 import java.sql.Date;
 
+@Component("goodsVO")
 public class GoodsVO {
     private int goods_id;
     private String goods_sort;

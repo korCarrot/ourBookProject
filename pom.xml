@@ -52,7 +52,7 @@
             <version>${org.aspectj-version}</version>
         </dependency>
         <!-- Logging -->
-        <dependency>
+     <!--   <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${org.slf4j-version}</version>
@@ -68,11 +68,27 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>${org.slf4j-version}</version>
             <scope>runtime</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.23.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.23.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-to-slf4j</artifactId>
+            <version>2.21.1</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.15</version>
+            <!-- Maven이 프로젝트를 빌드할 때 log4j 라이브러리를 포함하되, 명시된 제외(exclusion)된 라이브러리들-->
             <exclusions>
                 <exclusion>
                     <groupId>javax.mail</groupId>
@@ -93,6 +109,14 @@
             </exclusions>
             <scope>runtime</scope>
         </dependency>
+        <!--lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- @Inject -->
         <dependency>
             <groupId>javax.inject</groupId>
@@ -211,6 +235,11 @@
             <artifactId>spring-aop</artifactId>
             <version>${org.springframework-version}</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>aopalliance</groupId>-->
+<!--            <artifactId>aopalliance</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--        </dependency>-->
 
         <!-- AspectJ -->
         <dependency>

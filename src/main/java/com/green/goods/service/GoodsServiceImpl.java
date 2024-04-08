@@ -33,7 +33,7 @@ public class GoodsServiceImpl implements GoodsService{
         return goodsMap;
     }
 
-
+//상품 상세 조회
     public Map goodsDetail(String goods_id) throws Exception {
         Map goodsMap=new HashMap();
         GoodsVO goodsVO = goodsDAO.selectGoodsDetail(goods_id);
@@ -44,4 +44,18 @@ public class GoodsServiceImpl implements GoodsService{
 
         return goodsMap;
     }
+
+    //검색창에서 가져온 키워드가 포함된 상품 제목 조회
+    public List<String> keywordSearch(String keyword) throws Exception{
+        List<String> list=goodsDAO.selectKeywordSearch(keyword);
+        return list;
+    }
+
+
+    //검색창에서 가져온 단어가 포함된 상품들 조회
+    public List<GoodsVO> searchGoods(String searchWord) throws Exception{
+        List goodsList=goodsDAO.selectGoodsBySearchWord(searchWord);
+        return goodsList;
+    }
+
 }

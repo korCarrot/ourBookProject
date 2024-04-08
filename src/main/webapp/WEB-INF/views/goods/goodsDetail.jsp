@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" 	isELIgnored="false"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+         pageEncoding="utf-8" 	isELIgnored="false"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -107,7 +108,7 @@
             i_goods_id.name="goods_id";
             i_goods_title.name="goods_title";
             i_goods_sales_price.name="goods_sales_price";
-            i_fileName.name="goods_fileName";
+            i_fileName.name="fileName";
             i_order_goods_qty.name="order_goods_qty";
 
             i_goods_id.value=goods_id;
@@ -129,7 +130,6 @@
         }
     </script>
 </head>
-
 <body>
 <hgroup>
     <h1>컴퓨터와 인터넷</h1>
@@ -137,25 +137,21 @@
     <h3>${goods.goods_title }</h3>
     <h4>${goods.goods_writer} &nbsp; 저| ${goods.goods_publisher}</h4>
 </hgroup>
-
 <div id="goods_image">
     <figure>
-        <img alt="HTML5 &amp; CSS3"     <%--에러 날수도 있음. 에러나면 src 주석처리해놓기--%>
-             src="${contextPath}/thumbnails.do?goods_id=${goods.goods_id}&fileName=${goods.goods_fileName}">
+        <img alt="HTML5 &amp; CSS3"
+             src="${contextPath}/thumbnails.do?goods_id=${goods.goods_id}&fileName=${goods.fileName}">
     </figure>
 </div>
-
 <div id="detail_table">
     <table>
         <tbody>
         <tr>
             <td class="fixed">정가</td>
-            <td class="active">
-                <span>
-                    <fmt:formatNumber  value="${goods.goods_price}" type="number" var="goods_price" />
+            <td class="active"><span >
+					   <fmt:formatNumber  value="${goods.goods_price}" type="number" var="goods_price" />
 				         ${goods_price}원
-                </span>
-            </td>
+					</span></td>
         </tr>
         <tr class="dot_line">
             <td class="fixed">판매가</td>
@@ -169,7 +165,7 @@
         </tr>
         <tr class="dot_line">
             <td class="fixed">포인트 추가적립</td>
-            <td class="fixed">만원이상 구매시 1,000P, 5만원이상 구매시 2,000P 추가적립, 편의점 배송 이용시 300P 추가적립</td>
+            <td class="fixed">만원이상 구매시 1,000P, 5만원이상 구매시 2,000P추가적립 편의점 배송 이용시 300P 추가적립</td>
         </tr>
         <tr>
             <td class="fixed">발행일</td>
@@ -189,12 +185,12 @@
         </tr>
         <tr>
             <td class="fixed">배송료</td>
-            <td class="fixed"><strong>3000원</strong></td>
+            <td class="fixed"><strong>무료</strong></td>
         </tr>
         <tr>
             <td class="fixed">배송안내</td>
             <td class="fixed"><strong>[당일배송]</strong> 당일배송 서비스 시작!<br> <strong>[휴일배송]</strong>
-                휴일에도 배송받는 ourbook</TD>
+                휴일에도 배송받는 Bookshop</TD>
         </tr>
         <tr>
             <td class="fixed">도착예정일</td>
@@ -203,7 +199,6 @@
         <tr>
             <td class="fixed">수량</td>
             <td class="fixed">
-                <%--실력이 된다면 자바스크립트를 이용해서 추가하도록..--%>
                 <select style="width: 60px;" id="order_goods_qty">
                     <option>1</option>
                     <option>2</option>
@@ -267,19 +262,16 @@
     </div>
 </div>
 <div class="clear"></div>
-<%--에러나면 layer의 div와 popup의 div위치 맞는지 확인--%>
 <div id="layer" style="visibility: hidden">
     <!-- visibility:hidden 으로 설정하여 해당 div안의 모든것들을 가려둔다. -->
     <div id="popup">
         <!-- 팝업창 닫기 버튼 -->
-        <a href="javascript:" onClick="javascript:imagePopup('close', '.layer01');">
-            <img src="${contextPath}/resources/image/close.png" id="close" />
+        <a href="javascript:" onClick="javascript:imagePopup('close', '.layer01');"> <img
+                src="${contextPath}/resources/image/close.png" id="close" />
         </a> <br /> <font size="12" id="contents">장바구니에 담았습니다.</font><br>
         <form   action='${contextPath}/cart/myCartList.do'  >
             <input  type="submit" value="장바구니 보기">
         </form>
-    </div>
-    </div>
 </body>
 </html>
 <input type="hidden" name="isLogOn" id="isLogOn" value="${isLogOn}"/>

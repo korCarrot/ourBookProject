@@ -3,14 +3,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
 
+
 <div id="ad_main_banner">
     <ul class="bjqs">
-        <li><img width="775" height="145" src="${contextPath}/resources/image/cat1.jpg"></li>
-        <li><img width="775" height="145" src="${contextPath}/resources/image/mountain.jpg"></li>
-        <li><img width="775" height="145" src="${contextPath}/resources/image/panda.jpg"></li>
+        <li><img width="775" height="145" src="${contextPath}/resources/image/main_banner01.jpg"></li>
+        <li><img width="775" height="145" src="${contextPath}/resources/image/main_banner02.jpg"></li>
+        <li><img width="775" height="145" src="${contextPath}/resources/image/main_banner03.jpg"></li>
     </ul>
 </div>
-
 <div class="main_book">
     <c:set  var="goods_count" value="0" />
     <h3>베스트셀러</h3>
@@ -36,12 +36,10 @@
         </c:if>
     </c:forEach>
 </div>
-
 <div class="clear"></div>
 <div id="ad_sub_banner">
-    <img width="770" height="117" src="${contextPath}/resources/image/panda.jpg">
+    <img width="770" height="117" src="${contextPath}/resources/image/sub_banner01.jpg">
 </div>
-
 <div class="main_book" >
     <c:set  var="goods_count" value="0" />
     <h3>새로 출판된 책</h3>
@@ -69,7 +67,7 @@
 
 <div class="clear"></div>
 <div id="ad_sub_banner">
-    <img width="770" height="117" src="${contextPath}/resources/image/mountain.jpg">
+    <img width="770" height="117" src="${contextPath}/resources/image/sub_banner02.jpg">
 </div>
 
 

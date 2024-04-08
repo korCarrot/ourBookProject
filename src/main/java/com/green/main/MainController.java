@@ -22,7 +22,9 @@ public class MainController extends BaseController {
     @Autowired
     private GoodsService goodsService;
 
-    @RequestMapping(value= "/main/main.do" ,method={RequestMethod.POST, RequestMethod.GET})
+    //메인페이지 ("/ourbook"으로 해도 적용 안됨)
+//    @RequestMapping(value= {"/ourbook", "/main/main.do"} ,method={RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value=  "/main/main.do" ,method={RequestMethod.POST, RequestMethod.GET})
     public ModelAndView main(HttpServletRequest request, HttpServletResponse response) throws Exception{
         HttpSession session;
         ModelAndView mav=new ModelAndView();
@@ -37,6 +39,7 @@ public class MainController extends BaseController {
     }
 
 
+    //getViewName
     private String getViewName(HttpServletRequest request) throws Exception {
         String contextPath = request.getContextPath();
         String uri = (String) request.getAttribute("javax.servlet.include.request_uri");

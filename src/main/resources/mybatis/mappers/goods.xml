@@ -76,6 +76,14 @@
 	</select>
 
 
+    <!--
+    '%': %는 와일드카드 문자로, 어떤 문자열이든 0개 이상의 문자열과 일치하는 것을 나타냅니다. 따라서 이것은 검색어가 포함된 어떤 문자열이든 일치하는 것을 의미합니다.
+    ||: ||는 문자열을 연결하는 연산자입니다. 여기서는 %와 검색어를 연결하여 와일드카드 문자열을 만듭니다.
+    #{searchWord}: 동적으로 입력되는 검색어가 여기에 들어갑니다.
+
+    결과적으로 g.goods_title like '%'|| #{searchWord} || '%'은
+    goods_title 열의 값이 검색어를 포함하는 모든 행을 선택하는 조건을 나타냅니다.
+    -->
     <select id="selectGoodsBySearchWord" resultMap="goodsResult"   parameterType="String"  >
      <![CDATA[
         select g.*,d.fileName from goods g, goods_detail_image d
@@ -86,6 +94,7 @@
         ]]>
 	</select>
 
+    <!--검색창에 입력한 키워드를 가져와 그 키워드가 포함된 상품 제목을 조회합니다.-->
     <select id="selectKeywordSearch" resultType="String"   parameterType="String"  >
 	    <![CDATA[
         select goods_title from goods

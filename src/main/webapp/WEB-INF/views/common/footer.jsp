@@ -14,7 +14,7 @@
 
 <div class="clear"></div>
 
-<a href="#"><img width="147px"  height="62px" alt="logo이미지" src="${contextPath}/resources/image/cat1.jpg" /></a>
+<a href="#"><img width="147px"  height="62px" alt="Booktopia" src="${contextPath}/resources/image/Booktopia_Logo2.jpg" /></a>
 <div style="padding-left:200px">
     ㈜ourbook <br>
     대표이사: 김당근   <br>

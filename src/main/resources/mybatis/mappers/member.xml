@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.member">
+    <!-- 리절트 맵 정의 -->
+    <resultMap id="memberResult" type="MemberVO">
+        <result property="member_id" column="member_id" />
+        <result property="member_pw" column="member_pw" />
+        <result property="member_name" column="member_name" />
+        <result property="member_gender" column="member_gender" />
+
+        <result property="tel" column="tel" />
+        <result property="hp" column="hp" />
+        <result property="smssts_yn" column="smssts_yn" />
+        <result property="email" column="email" />
+        <result property="emailsts_yn" column="emailsts_yn" />
+
+        <result property="zipcode" column="zipcode" />
+        <result property="roadAddress" column="roadAddress" />
+        <result property="jibunAddress" column="jibunAddress" />
+
+        <result property="member_birth_y" column="member_birth_y" />
+        <result property="member_birth_m" column="member_birth_m" />
+        <result property="member_birth_d" column="member_birth_d" />
+        <result property="member_birth_sl" column="member_birth_sl" />
+
+        <result property="joinDate" column="joinDate" />
+        <result property="del_yn" column="del_yn" />
+        <result property="detailAddress" column="detailAddress" />
+    </resultMap>
+
+    <!--간단한 SQL 결과를 처리할 때는 resultType을 사용하고, 복잡한 결과를 다룰 때는 resultMap을 사용하는 것이 일반적인 관례-->
+    <select id="login" resultType="memberVO"  parameterType="java.util.Map"  >
+	    <![CDATA[
+        select * from MEMBER
+        where member_id=#{member_id}
+          and member_pw=#{member_pw}
+
+        ]]>
+	</select>
+
+<!--  DECODE 함수는 조건에 따라 값을 반환하는 함수입니다.
+이 함수는 첫 번째 매개변수로 지정된 값(count(*))이 두 번째 매개변수로 지정된 값(1)과 같으면 세 번째 매개변수로 지정된 값(true)을 반환하고,
+그렇지 않으면 네 번째 매개변수로 지정된 값(false)을 반환합니다.  -->
+<!--  조건에 맞는 row가 있으면 true반환, 없으면 false반환  -->
+    <select id="selectOverlappedID" parameterType="String" resultType="String">
+        select decode(count(*),1, 'true', 0, 'false')
+        from MEMBER
+        where member_id = #{id}
+    </select>
+
+    <insert id="insertNewMember"  parameterType="memberVO">
+  <![CDATA[
+        insert into MEMBER(member_id,
+                                      member_pw,
+                                      member_name,
+                                      member_gender,
+                                      tel,
+                                      hp,
+                                      smssts_yn,
+                                      email,
+                                      emailsts_yn,
+                                      zipcode,
+                                      roadAddress,
+                                      jibunAddress,
+                                      member_birth_y,
+                                      member_birth_m,
+                                      member_birth_d,
+                                      member_birth_sl,
+                                      DETAILADDRESS)
+        values(#{member_id},
+               #{member_pw},
+               #{member_name},
+               #{member_gender},
+               #{tel},
+               #{hp},
+               #{smssts_yn},
+               #{email},
+               #{emailsts_yn},
+               #{zipcode},
+               #{roadAddress},
+               #{jibunAddress},
+               #{member_birth_y},
+               #{member_birth_m},
+               #{member_birth_d},
+               #{member_birth_sl},
+               #{DETAILADDRESS}
+              )
+
+
+        ]]>
+  </insert>
+</mapper>

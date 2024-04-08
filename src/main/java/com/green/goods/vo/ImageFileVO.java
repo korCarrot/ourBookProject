@@ -1,5 +1,8 @@
 package com.green.goods.vo;
 
+import org.springframework.stereotype.Component;
+
+@Component("imageFileVO")
 public class ImageFileVO {
     private int image_id;
     private int goods_id;
@@ -9,7 +12,7 @@ public class ImageFileVO {
 
 
     public ImageFileVO() {
-        super();
+
     }
 
 

@@ -68,7 +68,7 @@
 
 <div class="clear"></div>
 <div id="banner">
-    <a href="#"><img width="190" height="163" src="${contextPath}/resources/image/cat1.jpg"> </a>
+    <a href="#"><img width="190" height="163" src="${contextPath}/resources/image/n-pay.jpg"> </a>
 </div>
 <DIV id="notice">
     <H2>공지사항</H2>
@@ -82,12 +82,12 @@
 
 
 <div id="banner">
-    <a href="#"><img width="190" height="362" src="${contextPath}/resources/image/cat1.jpg"></a>
+    <a href="#"><img width="190" height="362" src="${contextPath}/resources/image/side_banner1.jpg"></a>
 </div>
 <div id="banner">
-    <a href="#"><img width="190" height="104" src="${contextPath}/resources/image/panda.jpg"></a>
+    <a href="#"><img width="190" height="104" src="${contextPath}/resources/image/call_center_logo.jpg"></a>
 </div>
 <div id="banner">
-    <a href="#"><img width="190" height="69" src="${contextPath}/resources/image/mountain.jpg"></a>
+    <a href="#"><img width="190" height="69" src="${contextPath}/resources/image/QnA_logo.jpg"></a>
 </div>
 </html>
