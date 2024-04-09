@@ -3,6 +3,7 @@ package com.green.main;
 import com.green.common.base.BaseController;
 import com.green.goods.service.GoodsService;
 import com.green.goods.vo.GoodsVO;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
+@Log4j2
 @Controller("mainController")
 @EnableAspectJAutoProxy
 public class MainController extends BaseController {
@@ -26,6 +28,7 @@ public class MainController extends BaseController {
 //    @RequestMapping(value= {"/ourbook", "/main/main.do"} ,method={RequestMethod.POST, RequestMethod.GET})
     @RequestMapping(value=  "/main/main.do" ,method={RequestMethod.POST, RequestMethod.GET})
     public ModelAndView main(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        System.out.println("메인");
         HttpSession session;
         ModelAndView mav=new ModelAndView();
         String viewName=getViewName(request);

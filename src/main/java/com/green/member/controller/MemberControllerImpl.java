@@ -35,7 +35,7 @@ public class MemberControllerImpl extends BaseController implements MemberContro
                               HttpServletRequest request, HttpServletResponse response) throws Exception {
         ModelAndView mav = new ModelAndView();
         memberVO = memberService.login(loginMap);
-
+        log.info("로그인 메서드");
         //로그인 정보 값이 있다면 세션에 저장
         if(memberVO!= null && memberVO.getMember_id()!=null){
             HttpSession session=request.getSession();
@@ -62,10 +62,30 @@ public class MemberControllerImpl extends BaseController implements MemberContro
     return mav;
     }
 
+    //로그아웃
+    @Override
+    @RequestMapping(value="/logout.do" ,method = RequestMethod.GET)
+    public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ModelAndView mav = new ModelAndView();
+        HttpSession session=request.getSession();
+        session.setAttribute("isLogOn", false); //로그인 상태 변경
+        session.removeAttribute("memberInfo");        //로그인 정보 세션에서 삭제
+        mav.setViewName("redirect:/main/main.do");
+        return mav;
+    }
+
+
+    //로그인폼으로 이동
+    @RequestMapping(value="/loginForm.do" ,method = RequestMethod.GET)
+    public ModelAndView loginForm(HttpServletRequest request, HttpServletResponse response)throws Exception{
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/member/loginForm");
+        return mav;
+    }
 
     //회원가입폼으로 이동
     @RequestMapping(value="/memberForm.do" ,method = RequestMethod.GET)
-    public ModelAndView loginForm(HttpServletRequest request, HttpServletResponse response)throws Exception{
+    public ModelAndView memberForm(HttpServletRequest request, HttpServletResponse response)throws Exception{
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/member/memberForm");
         return mav;
@@ -84,6 +104,8 @@ public ResponseEntity addMember(@ModelAttribute("memberVO") MemberVO memberVO,
     responseHeaders.add("Content-Type","text/html; charset=utf-8");
     try {
         //location.href를 통해 알림을 띄우고 페이지 이동.
+        System.out.println("memberVO : "+memberVO);
+        System.out.println("회원가입 하러 이동 - controller");
         memberService.addMember(memberVO);
         message  = "<script>";
         message +=" alert('회원 가입을 마쳤습니다.로그인창으로 이동합니다.');";
@@ -91,11 +113,12 @@ public ResponseEntity addMember(@ModelAttribute("memberVO") MemberVO memberVO,
         message += " </script>";
 
     }catch(Exception e) {
+        System.out.println("회원가입 중 에러");
         message  = "<script>";
         message +=" alert('작업 중 오류가 발생했습니다. 다시 시도해 주세요');";
         message += " location.href='"+request.getContextPath()+"/member/memberForm.do';";
         message += " </script>";
-       log.info("회원가입 중 에러");
+
     }
 //    message: 응답 본문에 해당하는 문자열입니다. 클라이언트에게 전달할 메시지나 데이터를 포함. 클라이언트 측에서 실행될 스크립트 코드.
 //    responseHeaders: 클라이언트에게 전달할 응답의 헤더 정보

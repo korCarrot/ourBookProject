@@ -10,21 +10,26 @@ import org.springframework.stereotype.Component;
         private String member_pw;
         private String member_name;
         private String member_gender;
-        private String tel;
-        private String hp;
+        private String tel1;
+        private String tel2;
+        private String tel3;
+        private String hp1;
+        private String hp2;
+        private String hp3;
         private String smssts_yn;
-        private String email;
-        private String emailsts_yn;
+        private String email1;
+        private String email2;
         private String zipcode;
         private String roadAddress;
         private String jibunAddress;
+        private String detailAddress;   //변경한 이름
         private String member_birth_y;
         private String member_birth_m;
         private String member_birth_d;
-        private String member_birth_sl;
+        private String member_birth_sl; //변경한 이름
         private String joinDate;
         private String del_yn;
-        private String detailAddress;
+        private String emailsts_yn;
 
         public MemberVO(){
             log.info("MemberVO실행");
@@ -62,20 +67,52 @@ import org.springframework.stereotype.Component;
             this.member_gender = member_gender;
         }
 
-        public String getTel() {
-            return tel;
+        public String getTel1() {
+            return tel1;
         }
 
-        public void setTel(String tel) {
-            this.tel = tel;
+        public void setTel1(String tel1) {
+            this.tel1 = tel1;
         }
 
-        public String getHp() {
-            return hp;
+        public String getTel2() {
+            return tel2;
         }
 
-        public void setHp(String hp) {
-            this.hp = hp;
+        public void setTel2(String tel2) {
+            this.tel2 = tel2;
+        }
+
+        public String getTel3() {
+            return tel3;
+        }
+
+        public void setTel3(String tel3) {
+            this.tel3 = tel3;
+        }
+
+        public String getHp1() {
+            return hp1;
+        }
+
+        public void setHp1(String hp1) {
+            this.hp1 = hp1;
+        }
+
+        public String getHp2() {
+            return hp2;
+        }
+
+        public void setHp2(String hp2) {
+            this.hp2 = hp2;
+        }
+
+        public String getHp3() {
+            return hp3;
+        }
+
+        public void setHp3(String hp3) {
+            this.hp3 = hp3;
         }
 
         public String getSmssts_yn() {
@@ -86,12 +123,20 @@ import org.springframework.stereotype.Component;
             this.smssts_yn = smssts_yn;
         }
 
-        public String getEmail() {
-            return email;
+        public String getEmail1() {
+            return email1;
         }
 
-        public void setEmail(String email) {
-            this.email = email;
+        public void setEmail1(String email1) {
+            this.email1 = email1;
+        }
+
+        public String getEmail2() {
+            return email2;
+        }
+
+        public void setEmail2(String email2) {
+            this.email2 = email2;
         }
 
         public String getEmailsts_yn() {

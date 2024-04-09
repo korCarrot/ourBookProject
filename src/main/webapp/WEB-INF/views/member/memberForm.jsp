@@ -97,6 +97,7 @@
 <form action="${contextPath}/member/addMember.do" method="post">
     <div id="detail_table">
         <table>
+            <tbody>
             <tr class="dot_line">
                 <td class="fixed_join">아이디</td>
                 <td>
@@ -116,9 +117,10 @@
             </tr>
             <tr class="dot_line">
                 <td class="fixed_join">성별</td>
-                <td><input type="radio" name="member_gender" value="102" />
+                <td><input type="radio" name="member_gender" value="02" />
                     여성<span style="padding-left:120px"></span>
-                    <input type="radio" name="member_gender" value="101" checked />남성
+                    <input type="radio" name="member_gender" value="01" checked />
+                    남성
                 </td>
             </tr>
             <tr class="dot_line">
@@ -162,9 +164,9 @@
                             </c:choose>
                         </c:forEach>
                     </select>일 <span style="padding-left:50px"></span>
-                    <input type="radio" name="member_birth_gn" value="2" checked />양력
+                    <input type="radio" name="member_birth_sl" value="2" checked />양력
                     <span style="padding-left:50px"></span>
-                    <input type="radio"  name="member_birth_gn" value="1" />음력
+                    <input type="radio"  name="member_birth_sl" value="1" />음력
                 </td>
             </tr>
             <tr class="dot_line">
@@ -237,7 +239,7 @@
                     <p>
                         지번 주소:<br><input type="text" id="roadAddress"  name="roadAddress" size="50"><br><br>
                         도로명 주소: <input type="text" id="jibunAddress" name="jibunAddress" size="50"><br><br>
-                        나머지 주소: <input type="text"  name="namujiAddress" size="50" />
+                        나머지 주소: <input type="text"  name="detailAddress" size="50" />
                         <!--   <span id="guide" style="color:#999"></span> -->
                     </p>
                 </td>
