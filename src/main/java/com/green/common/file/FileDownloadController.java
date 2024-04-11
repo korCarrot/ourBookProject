@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 
 
 @Controller
@@ -24,7 +25,8 @@ public class FileDownloadController {
         File image=new File(filePath);
 
         response.setHeader("Cache-Control","no-cache");
-        response.addHeader("Content-disposition", "attachment; fileName="+fileName);
+//        response.addHeader("Content-disposition", "attachment; fileName="+fileName);
+        response.addHeader("Content-disposition", "attachment; fileName="+ URLEncoder.encode(fileName, "utf-8"));
         FileInputStream in=new FileInputStream(image);
         byte[] buffer=new byte[1024*8];
         while(true){

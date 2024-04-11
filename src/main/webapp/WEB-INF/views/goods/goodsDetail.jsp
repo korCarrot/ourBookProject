@@ -15,6 +15,7 @@
 %>
 <html>
 <head>
+<%--    <script  src="https://code.jquery.com/jquery-3.6.4.js"></script>--%>
     <style>
         #layer {
             z-index: 2;
@@ -55,8 +56,10 @@
                     //alert(data);
                     //	$('#message').append(data);
                     if(data.trim()=='add_success'){
-                        imagePopup('open', '.layer01');
+                        console.log('add_success를 받아옴')
+                        imagePopup('open', '.layer01'); //imagePopup(type)는 실제로 하나의 매개변수만을 가지고 있습니다. 여기서 두 개의 인자가 전달되는 것은 문자열로 이루어진 단일 매개변수입니다. 이 문자열을 파싱하여 여러 개의 값으로 나누고 있습니다.
                     }else if(data.trim()=='already_existed'){
+                        console.log('already_existed를 받아옴')
                         alert("이미 카트에 등록된 상품입니다.");
                     }
 
@@ -72,6 +75,7 @@
 
         function imagePopup(type) {
             if (type == 'open') {
+                console.log('팝업창!! imagePopup open!!')
                 // 팝업창을 연다.
                 jQuery('#layer').attr('style', 'visibility:visible');
 
@@ -80,7 +84,7 @@
             }
 
             else if (type == 'close') {
-
+                console.log('팝업창!! imagePopup close!!')
                 // 팝업창을 닫는다.
                 jQuery('#layer').attr('style', 'visibility:hidden');
             }
@@ -132,8 +136,8 @@
 </head>
 <body>
 <hgroup>
-    <h1>컴퓨터와 인터넷</h1>
-    <h2>국내외 도서 &gt; 컴퓨터와 인터넷 &gt; 웹 개발</h2>
+    <h1>인문학</h1>
+    <h2>국내외 도서 &gt; 인문학 &gt; 자기개발</h2>
     <h3>${goods.goods_title }</h3>
     <h4>${goods.goods_writer} &nbsp; 저| ${goods.goods_publisher}</h4>
 </hgroup>
@@ -266,12 +270,16 @@
     <!-- visibility:hidden 으로 설정하여 해당 div안의 모든것들을 가려둔다. -->
     <div id="popup">
         <!-- 팝업창 닫기 버튼 -->
-        <a href="javascript:" onClick="javascript:imagePopup('close', '.layer01');"> <img
-                src="${contextPath}/resources/image/close.png" id="close" />
-        </a> <br /> <font size="12" id="contents">장바구니에 담았습니다.</font><br>
+        <a href="javascript:" onClick="javascript:imagePopup('close', '.layer01');">
+            <img src="${contextPath}/resources/image/close.png" id="close" />
+        </a> <br> <font size="12" id="contents">장바구니에 담았습니다.</font><br>
+
+        <%-- 장바구니 리스트 보기 --%>
         <form   action='${contextPath}/cart/myCartList.do'  >
             <input  type="submit" value="장바구니 보기">
         </form>
+    </div>
+</div>
 </body>
 </html>
 <input type="hidden" name="isLogOn" id="isLogOn" value="${isLogOn}"/>

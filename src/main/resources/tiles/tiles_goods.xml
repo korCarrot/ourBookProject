@@ -13,6 +13,8 @@
         <put-attribute name="body" value="/WEB-INF/views/goods/searchGoods.jsp" />
     </definition>
 
+
+
 </tiles-definitions>
 
 

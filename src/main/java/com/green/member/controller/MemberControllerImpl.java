@@ -35,6 +35,7 @@ public class MemberControllerImpl extends BaseController implements MemberContro
                               HttpServletRequest request, HttpServletResponse response) throws Exception {
         ModelAndView mav = new ModelAndView();
         memberVO = memberService.login(loginMap);
+        System.out.println("로그인 정보 memberVO : "+ memberVO);
         log.info("로그인 메서드");
         //로그인 정보 값이 있다면 세션에 저장
         if(memberVO!= null && memberVO.getMember_id()!=null){

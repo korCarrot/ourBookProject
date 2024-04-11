@@ -45,6 +45,7 @@
         ]]>
 	</select>
 
+<!-- 장바구니에 상품 추가  -->
     <insert id="insertGoodsInCart" parameterType="cartVO">
 	    <![CDATA[
         insert into shopping_cart(cart_id,
@@ -56,6 +57,7 @@
         ]]>
 	</insert>
 
+    <!--모든 장바구니 정보를 조회-->
     <select id="selectCartList"  parameterType="cartVO"  resultMap="cartResult"   >
 	    <![CDATA[
         select cart_id, goods_id, member_id, cart_goods_qty, creDate
@@ -64,9 +66,16 @@
         ]]>
 	</select>
 
+
+<!--  in 뒤에는 앞의 컬럼에 대한 조건내용이 나와야 함 -> foreach문을 통해 id값들을 대입  -->
+<!-- open: 반복되는 SQL 조건이 시작될 때 사용되는 문자열입니다. 일반적으로 (로 시작하는 것이 보편적입니다.
+    separator: 각 반복 요소 사이에 삽입되는 문자열입니다. 일반적으로 ,를 사용하여 각 요소를 구분합니다.
+    close: 반복되는 SQL 조건이 끝날 때 사용되는 문자열입니다. 일반적으로 )로 끝나게 됩니다.-->
+
+    <!--  장바구니 테이블에 등록된 상품 번호를 이용해 상품 정보를 조회  -->
     <select id="selectGoodsList" resultMap="goodsResult" parameterType="java.util.Map">
         <![CDATA[
-          select g.*,d.fileName from shopping_goods g, goods_detail_image d
+          select g.*,d.fileName from goods g, goods_detail_image d
           where g.goods_id=d.goods_id
           and d.filetype='main_image'
            and g.goods_id in
@@ -74,7 +83,7 @@
         <foreach item="item" collection="list" open="(" separator="," close=")">
             #{item.goods_id}
         </foreach>
-        order by g.goods_creDate desc
+        order by g.goods_paDate desc
     </select>
 
     <update id="updateCartGoodsQty" parameterType="cartVO">
