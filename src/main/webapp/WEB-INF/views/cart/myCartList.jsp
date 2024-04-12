@@ -13,172 +13,175 @@
 <html>
 <head>
     <title>Title</title>
-    function calcGoodsPrice(bookPrice,obj){
-    var totalPrice,final_total_price,totalNum;
-    var goods_qty=document.getElementById("select_goods_qty");
-    //alert("총 상품금액"+goods_qty.value);
-    var p_totalNum=document.getElementById("p_totalNum");
-    var p_totalPrice=document.getElementById("p_totalPrice");
-    var p_final_totalPrice=document.getElementById("p_final_totalPrice");
-    var h_totalNum=document.getElementById("h_totalNum");
-    var h_totalPrice=document.getElementById("h_totalPrice");
-    var h_totalDelivery=document.getElementById("h_totalDelivery");
-    var h_final_total_price=document.getElementById("h_final_totalPrice");
-    if(obj.checked==true){
-    //	alert("체크 했음")
+    <script type="text/javascript">
+        function calcGoodsPrice(bookPrice,obj){
+            var totalPrice,final_total_price,totalNum;
+            var goods_qty=document.getElementById("select_goods_qty");
+            //alert("총 상품금액"+goods_qty.value);
+            var p_totalNum=document.getElementById("p_totalNum");
+            var p_totalPrice=document.getElementById("p_totalPrice");
+            var p_final_totalPrice=document.getElementById("p_final_totalPrice");
+            var h_totalNum=document.getElementById("h_totalNum");
+            var h_totalPrice=document.getElementById("h_totalPrice");
+            var h_totalDelivery=document.getElementById("h_totalDelivery");
+            var h_final_total_price=document.getElementById("h_final_totalPrice");
+            if(obj.checked==true){
+                //	alert("체크 했음")
 
-    totalNum=Number(h_totalNum.value)+Number(goods_qty.value);
-    //alert("totalNum:"+totalNum);
-    totalPrice=Number(h_totalPrice.value)+Number(goods_qty.value*bookPrice);
-    //alert("totalPrice:"+totalPrice);
-    final_total_price=totalPrice+Number(h_totalDelivery.value);
-    //alert("final_total_price:"+final_total_price);
+                totalNum=Number(h_totalNum.value)+Number(goods_qty.value);
+                //alert("totalNum:"+totalNum);
+                totalPrice=Number(h_totalPrice.value)+Number(goods_qty.value*bookPrice);
+                //alert("totalPrice:"+totalPrice);
+                final_total_price=totalPrice+Number(h_totalDelivery.value);
+                //alert("final_total_price:"+final_total_price);
 
-    }else{
-    //	alert("h_totalNum.value:"+h_totalNum.value);
-    totalNum=Number(h_totalNum.value)-Number(goods_qty.value);
-    //	alert("totalNum:"+ totalNum);
-    totalPrice=Number(h_totalPrice.value)-Number(goods_qty.value)*bookPrice;
-    //	alert("totalPrice="+totalPrice);
-    final_total_price=totalPrice-Number(h_totalDelivery.value);
-    //	alert("final_total_price:"+final_total_price);
-    }
+            }else{
+                //	alert("h_totalNum.value:"+h_totalNum.value);
+                totalNum=Number(h_totalNum.value)-Number(goods_qty.value);
+                //	alert("totalNum:"+ totalNum);
+                totalPrice=Number(h_totalPrice.value)-Number(goods_qty.value)*bookPrice;
+                //	alert("totalPrice="+totalPrice);
+                final_total_price=totalPrice-Number(h_totalDelivery.value);
+                //	alert("final_total_price:"+final_total_price);
+            }
 
-    h_totalNum.value=totalNum;
+            h_totalNum.value=totalNum;
 
-    h_totalPrice.value=totalPrice;
-    h_final_total_price.value=final_total_price;
+            h_totalPrice.value=totalPrice;
+            h_final_total_price.value=final_total_price;
 
-    p_totalNum.innerHTML=totalNum;
-    p_totalPrice.innerHTML=totalPrice;
-    p_final_totalPrice.innerHTML=final_total_price;
-    }
+            p_totalNum.innerHTML=totalNum;
+            p_totalPrice.innerHTML=totalPrice;
+            p_final_totalPrice.innerHTML=final_total_price;
+        }
 
-    function modify_cart_qty(goods_id,bookPrice,index){
-    //alert(index);
-    var length=document.frm_order_all_cart.cart_goods_qty.length;
-    var _cart_goods_qty=0;
-    if(length>1){ //카트에 제품이 한개인 경우와 여러개인 경우 나누어서 처리한다.
-    _cart_goods_qty=document.frm_order_all_cart.cart_goods_qty[index].value;
-    }else{
-    _cart_goods_qty=document.frm_order_all_cart.cart_goods_qty.value;
-    }
+        // 장바구니 상품 개수 수정
+        function modify_cart_qty(goods_id,bookPrice,index){
+            //alert(index);
+            var length=document.frm_order_all_cart.cart_goods_qty.length;
+            var _cart_goods_qty=0;
+            if(length>1){ //카트에 제품이 한개인 경우와 여러개인 경우 나누어서 처리한다.
+                _cart_goods_qty=document.frm_order_all_cart.cart_goods_qty[index].value;
+            }else{
+                _cart_goods_qty=document.frm_order_all_cart.cart_goods_qty.value;
+            }
 
-    var cart_goods_qty=Number(_cart_goods_qty);
-    //alert("cart_goods_qty:"+cart_goods_qty);
-    //console.log(cart_goods_qty);
-    $.ajax({
-    type : "post",
-    async : false, //false인 경우 동기식으로 처리한다.
-    url : "${contextPath}/cart/modifyCartQty.do",
-    data : {
-    goods_id:goods_id,
-    cart_goods_qty:cart_goods_qty
-    },
+            var cart_goods_qty=Number(_cart_goods_qty);
+            //alert("cart_goods_qty:"+cart_goods_qty);
+            //console.log(cart_goods_qty);
+            $.ajax({
+                type : "post",
+                async : false, //false인 경우 동기식으로 처리한다.
+                url : "${contextPath}/cart/modifyCartQty.do",
+                data : {
+                    goods_id:goods_id,
+                    cart_goods_qty:cart_goods_qty
+                },
 
-    success : function(data, textStatus) {
-    //alert(data);
-    if(data.trim()=='modify_success'){
-    alert("수량을 변경했습니다!!");
-    }else{
-    alert("다시 시도해 주세요!!");
-    }
+                success : function(data, textStatus) {
+                    //alert(data);
+                    if(data.trim()=='modify_success'){
+                        alert("수량을 변경했습니다!!");
+                    }else{
+                        alert("다시 시도해 주세요!!");
+                    }
 
-    },
-    error : function(data, textStatus) {
-    alert("에러가 발생했습니다."+data);
-    },
-    complete : function(data, textStatus) {
-    //alert("작업을완료 했습니다");
+                },
+                error : function(data, textStatus) {
+                    alert("에러가 발생했습니다."+data);
+                },
+                complete : function(data, textStatus) {
+                    //alert("작업을완료 했습니다");
 
-    }
-    }); //end ajax
-    }
+                }
+            }); //end ajax
+        }
 
-    function delete_cart_goods(cart_id){
-    var cart_id=Number(cart_id);
-    var formObj=document.createElement("form");
-    var i_cart = document.createElement("input");
-    i_cart.name="cart_id";
-    i_cart.value=cart_id;
+        function delete_cart_goods(cart_id){
+            var cart_id=Number(cart_id);
+            var formObj=document.createElement("form");
+            var i_cart = document.createElement("input");
+            i_cart.name="cart_id";
+            i_cart.value=cart_id;
 
-    formObj.appendChild(i_cart);
-    document.body.appendChild(formObj);
-    formObj.method="post";
-    formObj.action="${contextPath}/cart/removeCartGoods.do";
-    formObj.submit();
-    }
+            formObj.appendChild(i_cart);
+            document.body.appendChild(formObj);
+            formObj.method="post";
+            formObj.action="${contextPath}/cart/removeCartGoods.do";
+            formObj.submit();
+        }
 
-    function fn_order_each_goods(goods_id,goods_title,goods_sales_price,fileName){
-    var total_price,final_total_price,_goods_qty;
-    var cart_goods_qty=document.getElementById("cart_goods_qty");
+        // 상품 주문하기
+        function fn_order_each_goods(goods_id,goods_title,goods_sales_price,fileName){
+            var total_price,final_total_price,_goods_qty;
+            var cart_goods_qty=document.getElementById("cart_goods_qty");   //장바구니 상품 개수
 
-    _order_goods_qty=cart_goods_qty.value; //장바구니에 담긴 개수 만큼 주문한다.
-    var formObj=document.createElement("form");
-    var i_goods_id = document.createElement("input");
-    var i_goods_title = document.createElement("input");
-    var i_goods_sales_price=document.createElement("input");
-    var i_fileName=document.createElement("input");
-    var i_order_goods_qty=document.createElement("input");
+            _order_goods_qty=cart_goods_qty.value; //장바구니에 담긴 개수 만큼 주문한다.
+            var formObj=document.createElement("form");
+            var i_goods_id = document.createElement("input");
+            var i_goods_title = document.createElement("input");
+            var i_goods_sales_price=document.createElement("input");
+            var i_fileName=document.createElement("input");
+            var i_order_goods_qty=document.createElement("input");
 
-    i_goods_id.name="goods_id";
-    i_goods_title.name="goods_title";
-    i_goods_sales_price.name="goods_sales_price";
-    i_fileName.name="goods_fileName";
-    i_order_goods_qty.name="order_goods_qty";
+            i_goods_id.name="goods_id";
+            i_goods_title.name="goods_title";
+            i_goods_sales_price.name="goods_sales_price";
+            i_fileName.name="goods_fileName";
+            i_order_goods_qty.name="order_goods_qty";
 
-    i_goods_id.value=goods_id;
-    i_order_goods_qty.value=_order_goods_qty;
-    i_goods_title.value=goods_title;
-    i_goods_sales_price.value=goods_sales_price;
-    i_fileName.value=fileName;
+            i_goods_id.value=goods_id;
+            i_order_goods_qty.value=_order_goods_qty;
+            i_goods_title.value=goods_title;
+            i_goods_sales_price.value=goods_sales_price;
+            i_fileName.value=fileName;
 
-    formObj.appendChild(i_goods_id);
-    formObj.appendChild(i_goods_title);
-    formObj.appendChild(i_goods_sales_price);
-    formObj.appendChild(i_fileName);
-    formObj.appendChild(i_order_goods_qty);
+            formObj.appendChild(i_goods_id);
+            formObj.appendChild(i_goods_title);
+            formObj.appendChild(i_goods_sales_price);
+            formObj.appendChild(i_fileName);
+            formObj.appendChild(i_order_goods_qty);
 
-    document.body.appendChild(formObj);
-    formObj.method="post";
-    formObj.action="${contextPath}/order/orderEachGoods.do";
-    formObj.submit();
-    }
+            document.body.appendChild(formObj);
+            formObj.method="post";
+            formObj.action="${contextPath}/order/orderEachGoods.do";
+            formObj.submit();
+        }
 
-    function fn_order_all_cart_goods(){
-    //	alert("모두 주문하기");
-    var order_goods_qty;
-    var order_goods_id;
-    var objForm=document.frm_order_all_cart;
-    var cart_goods_qty=objForm.cart_goods_qty;
-    var h_order_each_goods_qty=objForm.h_order_each_goods_qty;
-    var checked_goods=objForm.checked_goods;
-    var length=checked_goods.length;
+        function fn_order_all_cart_goods(){
+//	alert("모두 주문하기");
+            var order_goods_qty;
+            var order_goods_id;
+            var objForm=document.frm_order_all_cart;
+            var cart_goods_qty=objForm.cart_goods_qty;
+            var h_order_each_goods_qty=objForm.h_order_each_goods_qty;
+            var checked_goods=objForm.checked_goods;
+            var length=checked_goods.length;
 
 
-    //alert(length);
-    if(length>1){
-    for(var i=0; i<length;i++){
-    if(checked_goods[i].checked==true){
-    order_goods_id=checked_goods[i].value;
-    order_goods_qty=cart_goods_qty[i].value;
-    cart_goods_qty[i].value="";
-    cart_goods_qty[i].value=order_goods_id+":"+order_goods_qty;
-    //alert(select_goods_qty[i].value);
-    console.log(cart_goods_qty[i].value);
-    }
-    }
-    }else{
-    order_goods_id=checked_goods.value;
-    order_goods_qty=cart_goods_qty.value;
-    cart_goods_qty.value=order_goods_id+":"+order_goods_qty;
-    //alert(select_goods_qty.value);
-    }
+            //alert(length);
+            if(length>1){
+                for(var i=0; i<length;i++){
+                    if(checked_goods[i].checked==true){
+                        order_goods_id=checked_goods[i].value;
+                        order_goods_qty=cart_goods_qty[i].value;
+                        cart_goods_qty[i].value="";
+                        cart_goods_qty[i].value=order_goods_id+":"+order_goods_qty;
+                        //alert(select_goods_qty[i].value);
+                        console.log(cart_goods_qty[i].value);
+                    }
+                }
+            }else{
+                order_goods_id=checked_goods.value;
+                order_goods_qty=cart_goods_qty.value;
+                cart_goods_qty.value=order_goods_id+":"+order_goods_qty;
+                //alert(select_goods_qty.value);
+            }
 
-    objForm.method="post";
-    objForm.action="${contextPath}/order/orderAllCartGoods.do";
-    objForm.submit();
-    }
+            objForm.method="post";
+            objForm.action="${contextPath}/order/orderAllCartGoods.do";
+            objForm.submit();
+        }
 
     </script>
 </head>
@@ -224,10 +227,10 @@
                     <fmt:formatNumber  value="${item.goods_sales_price*0.9}" type="number" var="discounted_price" />
                         ${discounted_price}원(10%할인)
                 </strong>
-            </td>
-            <td>
+            </td>   <%--modify_cart_qty 매개변수에 Expression expected가 나서 ''를 넣어줬음--%>
+            <td>    <%--size=3는 입력 필드의 너비를 설정합니다. 여기서는 3개의 문자를 표시할 수 있도록 합니다. 입력 필드의 실제 너비를 지정하는 것이 아니라, 보이는 글자 수를 제어--%>
                 <input type="text" id="cart_goods_qty" name="cart_goods_qty" size=3 value="${cart_goods_qty}"><br>
-                <a href="javascript:modify_cart_qty(${item.goods_id },${item.goods_sales_price*0.9 },${cnt.count-1 });" >
+                <a href="javascript:modify_cart_qty('${item.goods_id }','${item.goods_sales_price*0.9 }','${cnt.count-1 }');" >
                     <img width=25 alt=""  src="${contextPath}/resources/image/btn_modify_qty.jpg">
                 </a>
             </td>
@@ -237,7 +240,8 @@
                         ${total_sales_price}원
                 </strong> </td>
             <td>
-                <a href="javascript:fn_order_each_goods('${item.goods_id }','${item.goods_title }','${item.goods_sales_price}','${item.goods_fileName}');">
+                <%--  상품 주문 --%>
+                <a href="javascript:fn_order_each_goods('${item.goods_id }','${item.goods_title }','${item.goods_sales_price}','${item.fileName}');">
                     <img width="75" alt=""  src="${contextPath}/resources/image/btn_order.jpg">
                 </a><br>
                 <a href="#">
@@ -248,7 +252,7 @@
                     <img width="75" alt=""
                          src="${contextPath}/resources/image/btn_add_list.jpg">
                 </A><br>
-                <a href="javascript:delete_cart_goods('${cart_id}');"">
+                <a href="javascript:delete_cart_goods('${cart_id}');">
                 <img width="75" alt=""
                      src="${contextPath}/resources/image/btn_delete.jpg">
                 </a>
@@ -316,17 +320,15 @@
     </tr>
 
 </table>
-<%--밑에 코드가 이상함.--%>
-<%--<center>--%>
-<%--    <br><br>--%>
-<%--    <a href="javascript:fn_order_all_cart_goods()">--%>
-<%--        <img width="75" alt="" src="${contextPath}/resources/image/btn_order_final.jpg">--%>
-<%--    </a>--%>
-<%--    <a href="#">--%>
-<%--        <img width="75" alt="" src="${contextPath}/resources/image/btn_shoping_continue.jpg">--%>
-<%--    </a>--%>
-<%--    <center>--%>
-<%--        </form>--%>
+<center>
+    <br><br>
+    <a href="javascript:fn_order_all_cart_goods()">
+        <img width="75" alt="" src="${contextPath}/resources/image/btn_order_final.jpg">
+    </a>
+    <a href="#">
+        <img width="75" alt="" src="${contextPath}/resources/image/btn_shoping_continue.jpg">
+    </a>
+</center>
 
 </body>
 </html>

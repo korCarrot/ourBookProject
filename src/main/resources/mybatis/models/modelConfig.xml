@@ -8,7 +8,7 @@
         <typeAlias type="com.green.goods.vo.ImageFileVO" alias="imageFileVO" />
         <typeAlias type="com.green.member.vo.MemberVO" alias="memberVO" />
         <typeAlias type="com.green.cart.vo.CartVO" alias="cartVO" />
-<!--        <typeAlias type="com.green.order.vo.OrderVO" alias="orderVO" />-->
+        <typeAlias type="com.green.order.vo.OrderVO" alias="orderVO" />
 <!--        <typeAlias type="com.green.mypage.vo.MyPageVO" alias="mypageVO" />-->
 
     </typeAliases>

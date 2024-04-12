@@ -1,8 +1,10 @@
 package com.green.member.vo;
 
+import lombok.ToString;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
+    @ToString
     @Component("memberVO")
     @Log4j2
     public class MemberVO {
