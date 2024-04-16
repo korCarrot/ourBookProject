@@ -58,6 +58,7 @@ public class CartControllerImpl extends BaseController implements CartController
         }
     }
 
+    //장바구니 조회
     @RequestMapping(value="/myCartList.do" ,method = RequestMethod.GET)
     public ModelAndView myCartMain(HttpServletRequest request, HttpServletResponse response)  throws Exception {
     String viewName = getViewName(request);
@@ -75,6 +76,39 @@ public class CartControllerImpl extends BaseController implements CartController
         return mav;
     }
 
+
+
+    //장바구니 수정
+    @RequestMapping(value="/modifyCartQty.do" ,method = RequestMethod.POST)
+    public @ResponseBody String  modifyCartQty(@RequestParam("goods_id") int goods_id,
+                                               @RequestParam("cart_goods_qty") int cart_goods_qty,
+                                               HttpServletRequest request, HttpServletResponse response)  throws Exception{
+        HttpSession session=request.getSession();
+        memberVO=(MemberVO)session.getAttribute("memberInfo");
+        String member_id=memberVO.getMember_id();
+        cartVO.setGoods_id(goods_id);
+        cartVO.setMember_id(member_id);
+        cartVO.setCart_goods_qty(cart_goods_qty);
+        boolean result=cartService.modifyCartQty(cartVO);
+
+        if(result==true){
+            return "modify_success";
+        }else{
+            return "modify_failed";
+        }
+
+    }
+
+
+    //장바구니 삭제
+    @RequestMapping(value="/removeCartGoods.do" ,method = RequestMethod.POST)
+    public ModelAndView removeCartGoods(@RequestParam("cart_id") int cart_id,
+                                        HttpServletRequest request, HttpServletResponse response)  throws Exception{
+        ModelAndView mav=new ModelAndView();
+        cartService.removeCartGoods(cart_id);
+        mav.setViewName("redirect:/cart/myCartList.do");
+        return mav;
+    }
 
 
     //getViewName

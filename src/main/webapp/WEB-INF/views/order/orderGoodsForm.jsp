@@ -98,17 +98,20 @@
             }).open();
         }
 
+        //상품 주문 페이지가 표시
         window.onload=function()
         {
             init();
         }
 
+        // 주문자의 휴대폰 번호와 유선 전화번호를 셀렉트 박스에 표시
         function init(){
             var form_order=document.form_order;
             var h_tel1=form_order.h_tel1;
             var h_hp1=form_order.h_hp1;
             var tel1=h_tel1.value;
             var hp1=h_hp1.value;
+
             var select_tel1=form_order.tel1;
             var select_hp1=form_order.hp1;
             select_tel1.value=tel1;
@@ -128,7 +131,7 @@
             var e_zipcode = document.getElementById("zipcode");
             var e_roadAddress = document.getElementById("roadAddress");
             var e_jibunAddress = document.getElementById("jibunAddress");
-            var e_namujiAddress = document.getElementById("namujiAddress");
+            var e_detailAddress = document.getElementById("detailAddress");
 
             e_receiver_name.value = "";
             e_hp1.value = 0;
@@ -140,7 +143,7 @@
             e_zipcode.value = "";
             e_roadAddress.value = "";
             e_jibunAddress.value = "";
-            e_namujiAddress.value = "";
+            e_detailAddress.value = "";
         }
 
         function restore_all() {
@@ -156,7 +159,7 @@
             var e_zipcode = document.getElementById("zipcode");
             var e_roadAddress = document.getElementById("roadAddress");
             var e_jibunAddress = document.getElementById("jibunAddress");
-            var e_namujiAddress = document.getElementById("namujiAddress");
+            var e_detailAddress = document.getElementById("detailAddress");
 
             var h_receiver_name = document.getElementById("h_receiver_name");
             var h_hp1 = document.getElementById("h_hp1");
@@ -170,7 +173,7 @@
             var h_zipcode = document.getElementById("h_zipcode");
             var h_roadAddress = document.getElementById("h_roadAddress");
             var h_jibunAddress = document.getElementById("h_jibunAddress");
-            var h_namujiAddress = document.getElementById("h_namujiAddress");
+            var h_detailAddress = document.getElementById("h_detailAddress");
             //alert(e_receiver_name.value);
             e_receiver_name.value = h_receiver_name.value;
             e_hp1.value = h_hp1.value;
@@ -183,7 +186,7 @@
             e_zipcode.value = h_zipcode.value;
             e_roadAddress.value = h_roadAddress.value;
             e_jibunAddress.value = h_jibunAddress.value;
-            e_namujiAddress.value = h_namujiAddress.value;
+            e_detailAddress.value = h_detailAddress.value;
 
         }
 
@@ -248,10 +251,12 @@
         var card_pay_month;
         var pay_orderer_hp_num;
 
+        //결제하기 누를시
         function fn_show_order_detail(){
             goods_id="";
             goods_title="";
 
+            //hidden태그에 담은 내용들을 변수에 넣음
             var frm=document.form_order;
             var h_goods_id=frm.h_goods_id;
             var h_goods_title=frm.h_goods_title;
@@ -264,7 +269,7 @@
             var h_orderer_name=document.getElementById("h_orderer_name");
             var i_receiver_name=document.getElementById("receiver_name");
 
-
+//주문 상품이 한 개 이하인 경우와 두 개 이상인 경우
             if(h_goods_id.length <2 ||h_goods_id.length==null){
                 goods_id+=h_goods_id.value;
             }else{
@@ -355,7 +360,7 @@
             var i_zipcode=document.getElementById("zipcode");
             var i_roadAddress=document.getElementById("roadAddress");
             var i_jibunAddress=document.getElementById("jibunAddress");
-            var i_namujiAddress=document.getElementById("namujiAddress");
+            var i_detailAddress=document.getElementById("detailAddress");
             var i_delivery_message=document.getElementById("delivery_message");
             var i_pay_method=document.getElementById("pay_method");
 
@@ -379,7 +384,7 @@
             delivery_address="우편번호:"+i_zipcode.value+"<br>"+
                 "도로명 주소:"+i_roadAddress.value+"<br>"+
                 "[지번 주소:"+i_jibunAddress.value+"]<br>"+
-                i_namujiAddress.value;
+                i_detailAddress.value;
 
             delivery_message=i_delivery_message.value;
 
@@ -463,7 +468,8 @@
             i_receiver_tel1.value=tel1;
             i_receiver_tel2.value=tel2;
             i_receiver_tel3.value=tel3;
-            ;
+
+            // 여기에 들어가는 value들이 어디서 오는가?
             i_delivery_address.value=delivery_address;
             i_delivery_message.value=delivery_message;
             i_delivery_method.value=delivery_method;
@@ -502,7 +508,9 @@
     <title>Title</title>
 </head>
 <body>
-<H1>1.주문확인</H1>
+<H1>1.주문확인</H1> ${myOrderList} <br>
+${myOrderList[0].goods_fileName}    <%--fileName값이 없음--%>
+
 <form  name="form_order">
     <table class="list_view" align="center">
         <tr style="background: #33ff00">
@@ -645,13 +653,13 @@
                         <input type="text" id="jibunAddress" name="jibunAddress" size="50"
                                value="${orderer.jibunAddress }" /><br>
                         <br> 나머지 주소:
-                        <input type="text" id="namujiAddress"  name="namujiAddress" size="50"
-                               value="${orderer.namujiAddress }" />
+                        <input type="text" id="detailAddress"  name="detailAddress" size="50"
+                               value="${orderer.detailAddress }" />
                     </p>
                     <input type="hidden" id="h_zipcode" name="h_zipcode" value="${orderer.zipcode }" />
                     <input type="hidden"  id="h_roadAddress" name="h_roadAddress"  value="${orderer.roadAddress }" />
                     <input type="hidden"  id="h_jibunAddress" name="h_jibunAddress" value="${orderer.jibunAddress }" />
-                    <input type="hidden"  id="h_namujiAddress" name="h_namujiAddress" value="${orderer.namujiAddress }" />
+                    <input type="hidden"  id="h_detailAddress" name="h_detailAddress" value="${orderer.detailAddress }" />
                 </td>
             </tr>
             <tr class="dot_line">
@@ -766,7 +774,7 @@
                 <img width="25" alt="" 	src="${pageContext.request.contextPath}/resources/image/minus.jpg"></td>
             <td>
                 <p id="p_totalSalesPrice">${total_discount_price }원</p>
-                <input id="h_total_sales_price" type="hidden" value="${total_discount_price}" />
+                <input id="h_total_sales_price" name="h_total_sales_price" type="hidden" value="${total_discount_price}" />
             </td>
             <td><img width="25" alt="" src="${pageContext.request.contextPath}/resources/image/equal.jpg"></td>
             <td>

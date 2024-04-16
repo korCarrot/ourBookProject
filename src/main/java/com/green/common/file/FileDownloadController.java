@@ -21,6 +21,7 @@ public class FileDownloadController {
                             @RequestParam("goods_id") String goods_id,
                             HttpServletResponse response) throws Exception {
         OutputStream out = response.getOutputStream();
+
         String filePath=CURR_IMAGE_REPO_PATH+"\\"+goods_id+"\\"+fileName;
         File image=new File(filePath);
 
@@ -41,11 +42,13 @@ public class FileDownloadController {
 
 
     @RequestMapping("/thumbnails.do")
+    @SuppressWarnings(value = "warn")
     protected void thumbnails(@RequestParam("fileName") String fileName,
                               @RequestParam("goods_id") String goods_id,
                               HttpServletResponse response) throws Exception {
         OutputStream out = response.getOutputStream();
-        String filePath=CURR_IMAGE_REPO_PATH+"\\"+goods_id+"\\"+fileName;
+        String encodedfileName = new String(fileName.getBytes(), "UTF-8");
+        String filePath=CURR_IMAGE_REPO_PATH+"\\"+goods_id+"\\"+encodedfileName;
         File image=new File(filePath);
 
         if (image.exists()) {
@@ -55,4 +58,6 @@ public class FileDownloadController {
         out.write(buffer);
         out.close();
     }
+
+
 }

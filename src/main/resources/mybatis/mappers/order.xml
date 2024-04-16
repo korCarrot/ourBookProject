@@ -44,7 +44,7 @@
 
     <select id="selectMyOrderList" resultMap="orderGoodsResult"  parameterType="orderVO"  >
 	    <![CDATA[
-        select * from t_shopping_order
+        select * from goods_order
         where to_char(pay_order_time,'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')
           and member_id=#{member_id}
         order by pay_order_time desc
@@ -80,7 +80,7 @@
 					                    delivery_address,
 						                delivery_method,
 					                    delivery_message,
-						                gift_wrapping_yn,
+						                gift_wrapping,
 						                pay_method,
 						                card_com_name,
 						                card_pay_month,
@@ -105,7 +105,7 @@
 					                    #{delivery_address},
 					                    #{delivery_message},
 						                #{delivery_method},
-						                #{gift_wrapping_yn},
+						                #{gift_wrapping},
 						                #{pay_method},
 						                #{card_com_name},
 						                #{card_pay_month},
@@ -123,7 +123,7 @@
 
     <select id="selectMyOrder" resultMap="orderGoodsResult"   parameterType="String"  >
 	    <![CDATA[
-        select * from t_shopping_order
+        select * from goods_order
         where to_char(pay_order_time,'yyyy-mm-dd')=to_char(sysdate,'yyyy-mm-dd')
           and order_id=#{order_id}
         order by pay_order_time desc
@@ -131,7 +131,7 @@
 	</select>
 
     <delete id="deleteGoodsFromCart" parameterType="orderVO">
-        delete from t_shopping_cart
+        delete from shopping_cart
         where goods_id=#{goods_id}
     </delete>
 

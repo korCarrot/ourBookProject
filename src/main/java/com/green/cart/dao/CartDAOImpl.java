@@ -50,4 +50,16 @@ public class CartDAOImpl  implements  CartDAO{
         List<GoodsVO> myGoodsList = sqlSession.selectList("mapper.cart.selectGoodsList",cartList);
         return myGoodsList;
     }
+
+    //장바구니 수정(수량)
+    public void updateCartGoodsQty(CartVO cartVO) throws DataAccessException{
+        sqlSession.insert("mapper.cart.updateCartGoodsQty",cartVO);
+    }
+
+    //장바구니 삭제
+    public void deleteCartGoods(int cart_id) throws DataAccessException{
+        sqlSession.delete("mapper.cart.deleteCartGoods",cart_id);
+    }
+
+
 }

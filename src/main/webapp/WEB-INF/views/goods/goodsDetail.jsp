@@ -90,7 +90,7 @@
             }
         }
 
-        //상품 구매하기
+        //상품 구매하기(GoodsVO의 값으로 매개변수가 들어옴)
         function fn_order_each_goods(goods_id,goods_title,goods_sales_price,fileName){
             var _isLogOn=document.getElementById("isLogOn");
             var isLogOn=_isLogOn.value;
@@ -107,25 +107,25 @@
             var i_goods_id = document.createElement("input");
             var i_goods_title = document.createElement("input");
             var i_goods_sales_price=document.createElement("input");
-            var i_fileName=document.createElement("input");
+            var i_goods_fileName=document.createElement("input");
             var i_order_goods_qty=document.createElement("input");
 
             i_goods_id.name="goods_id";
             i_goods_title.name="goods_title";
             i_goods_sales_price.name="goods_sales_price";
-            i_fileName.name="fileName";
+            i_goods_fileName.name="goods_fileName";
             i_order_goods_qty.name="order_goods_qty";
 
             i_goods_id.value=goods_id;
             i_order_goods_qty.value=order_goods_qty.value;
             i_goods_title.value=goods_title;
             i_goods_sales_price.value=goods_sales_price;
-            i_fileName.value=fileName;
+            i_goods_fileName.value=fileName;
 
             formObj.appendChild(i_goods_id);
             formObj.appendChild(i_goods_title);
             formObj.appendChild(i_goods_sales_price);
-            formObj.appendChild(i_fileName);
+            formObj.appendChild(i_goods_fileName);
             formObj.appendChild(i_order_goods_qty);
 
             document.body.appendChild(formObj);
@@ -283,4 +283,5 @@
 </div>
 </body>
 </html>
+<%--로그인 상태를 hidden태그에 저장--%>
 <input type="hidden" name="isLogOn" id="isLogOn" value="${isLogOn}"/>

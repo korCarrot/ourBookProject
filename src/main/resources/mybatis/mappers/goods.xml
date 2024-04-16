@@ -43,7 +43,7 @@
 
 
 
-
+<!--상품목록을 15개까지 확인가능-->
     <select id="selectGoodsList" parameterType="String" resultMap="goodsResult"   >
         <![CDATA[
         select t.*

@@ -45,4 +45,21 @@ public class CartServiceImpl  implements CartService {
 
         return cartMap;
     }
+
+
+    //장바구니 수정
+    public boolean modifyCartQty(CartVO cartVO) throws Exception{
+        boolean result=true;
+        cartDAO.updateCartGoodsQty(cartVO);
+        return result;
+    }
+
+
+    //장바구니 삭제
+    public void removeCartGoods(int cart_id) throws Exception{
+        cartDAO.deleteCartGoods(cart_id);
+    }
+
+
+
 }
