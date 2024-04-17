@@ -47,6 +47,7 @@
     </style>
 
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+
     <script>
         function execDaumPostcode() {
             new daum.Postcode({
@@ -460,6 +461,7 @@
             i_card_pay_month.name="card_pay_month";
             i_pay_orderer_hp_num.name="pay_orderer_hp_num";
 
+            // 여기에 들어가는 value들이 어디서 오는가?
             i_receiver_name.value=receiver_name;
             i_receiver_hp1.value=hp1;
             i_receiver_hp2.value=hp2;
@@ -469,7 +471,7 @@
             i_receiver_tel2.value=tel2;
             i_receiver_tel3.value=tel3;
 
-            // 여기에 들어가는 value들이 어디서 오는가?
+
             i_delivery_address.value=delivery_address;
             i_delivery_message.value=delivery_message;
             i_delivery_method.value=delivery_method;
@@ -496,7 +498,7 @@
             formObj.appendChild(i_card_com_name);
             formObj.appendChild(i_card_pay_month);
             formObj.appendChild(i_pay_orderer_hp_num);
-
+            // console.log('formObj : ', formObj);  //form은 나온다.
 
             document.body.appendChild(formObj);
             formObj.method="post";
@@ -508,8 +510,9 @@
     <title>Title</title>
 </head>
 <body>
-<H1>1.주문확인</H1> ${myOrderList} <br>
-${myOrderList[0].goods_fileName}    <%--fileName값이 없음--%>
+<div id="hello1"></div>
+<H1>1.주문확인</H1>
+<%--${myOrderList[0].goods_fileName}--%>    <%--fileName값이 없음 <-해결완료. 위에 name 속성 문제.--%>
 
 <form  name="form_order">
     <table class="list_view" align="center">
@@ -521,33 +524,33 @@ ${myOrderList[0].goods_fileName}    <%--fileName값이 없음--%>
             <td>예상적립금</td>
             <td>주문금액합계</td>
         </tr>
-<tr>
-<c:forEach var="item" items="${myOrderList }">  <%--상품id, 수량, 제목, 가격, 이미지 이름 / ORDER VO의 정보로 들어옴--%>
-    <td class="goods_image">
-    <a href="${contextPath}/goods/goodsDetail.do?goods_id=${item.goods_id }">
-    <img width="75" alt=""  src="${contextPath}/thumbnails.do?goods_id=${item.goods_id}&fileName=${item.goods_fileName}">
-    <input   type="hidden" id="h_goods_id" name="h_goods_id" value="${item.goods_id }" />
-    <input   type="hidden" id="h_goods_fileName" name="h_goods_fileName" value="${item.goods_fileName }" />
-    </a>
-    </td>
-    <td>
-    <h2>
-    <a href="${pageContext.request.contextPath}/goods/goods.do?command=goods_detail&goods_id=${item.goods_id }">${item.goods_title }</A>
-    <input   type="hidden" id="h_goods_title" name="h_goods_title" value="${item.goods_title }" />
-    </h2>
-    </td>
-    <td>
-    <h2>${item.order_goods_qty }개</h2>
-    <input   type="hidden" id="h_order_goods_qty" name="h_order_goods_qty" value="${item.order_goods_qty}" />
-    </td>
-    <td><h2>${item.goods_sales_price}원 (10% 할인)</h2></td>
-    <td><h2>0원</h2></td>
-    <td><h2>${1500 *item.order_goods_qty}원</h2></td>
-    <td>
-    <h2>${item.goods_sales_price * item.order_goods_qty}원</h2>
-    <input  type="hidden" id="h_each_goods_price"  name="h_each_goods_price" value="${item.goods_sales_price * item.order_goods_qty}" />
-    </td>
-    </tr>
+        <tr>
+            <c:forEach var="item" items="${myOrderList }">  <%--상품id, 수량, 제목, 가격, 이미지 이름 / ORDER VO의 정보로 들어옴--%>
+            <td class="goods_image">
+                <a href="${contextPath}/goods/goodsDetail.do?goods_id=${item.goods_id }">
+                    <img width="75" alt=""  src="${contextPath}/thumbnails.do?goods_id=${item.goods_id}&fileName=${item.goods_fileName}">
+                    <input   type="hidden" id="h_goods_id" name="h_goods_id" value="${item.goods_id }" />
+                    <input   type="hidden" id="h_goods_fileName" name="h_goods_fileName" value="${item.goods_fileName }" />
+                </a>
+            </td>
+            <td>
+                <h2>
+                    <a href="${pageContext.request.contextPath}/goods/goods.do?command=goods_detail&goods_id=${item.goods_id }">${item.goods_title }</A>
+                    <input   type="hidden" id="h_goods_title" name="h_goods_title" value="${item.goods_title }" />
+                </h2>
+            </td>
+            <td>
+                <h2>${item.order_goods_qty }개</h2>
+                <input   type="hidden" id="h_order_goods_qty" name="h_order_goods_qty" value="${item.order_goods_qty}" />
+            </td>
+            <td><h2>${item.goods_sales_price}원 (10% 할인)</h2></td>
+            <td><h2>0원</h2></td>
+            <td><h2>${1500 *item.order_goods_qty}원</h2></td>
+            <td>
+                <h2>${item.goods_sales_price * item.order_goods_qty}원</h2>
+                <input  type="hidden" id="h_each_goods_price"  name="h_each_goods_price" value="${item.goods_sales_price * item.order_goods_qty}" />
+            </td>
+        </tr>
         <c:set var="final_total_order_price"
                value="${final_total_order_price+ item.goods_sales_price* item.order_goods_qty}" />
         <c:set var="total_order_price"
@@ -774,7 +777,7 @@ ${myOrderList[0].goods_fileName}    <%--fileName값이 없음--%>
                 <img width="25" alt="" 	src="${pageContext.request.contextPath}/resources/image/minus.jpg"></td>
             <td>
                 <p id="p_totalSalesPrice">${total_discount_price }원</p>
-                <input id="h_total_sales_price" name="h_total_sales_price" type="hidden" value="${total_discount_price}" />
+                <input id="h_total_sales_price" type="hidden" value="${total_discount_price}" />
             </td>
             <td><img width="25" alt="" src="${pageContext.request.contextPath}/resources/image/equal.jpg"></td>
             <td>
@@ -815,35 +818,35 @@ ${myOrderList[0].goods_fileName}    <%--fileName값이 없음--%>
             <tr id="tr_pay_card">
                 <td>
                     <strong>카드 선택</strong>:&nbsp;&nbsp;&nbsp;
-                        <select id="card_com_name" name="card_com_name">
-                            <option value="삼성" selected>삼성</option>
-                            <option value="하나SK">하나SK</option>
-                            <option value="현대">현대</option>
-                            <option value="KB">KB</option>
-                            <option value="신한">신한</option>
-                            <option value="롯데">롯데</option>
-                            <option value="BC">BC</option>
-                            <option value="시티">시티</option>
-                            <option value="NH농협">NH농협</option>
-                        </select>
-                        <br><Br>
-                        <strong>할부 기간:</strong>  &nbsp;&nbsp;&nbsp;
-                            <select id="card_pay_month" name="card_pay_month">
-                                <option value="일시불" selected>일시불</option>
-                                <option value="2개월">2개월</option>
-                                <option value="3개월">3개월</option>
-                                <option value="4개월">4개월</option>
-                                <option value="5개월">5개월</option>
-                                <option value="6개월">6개월</option>
-                            </select>
+                    <select id="card_com_name" name="card_com_name">
+                        <option value="삼성" selected>삼성</option>
+                        <option value="하나SK">하나SK</option>
+                        <option value="현대">현대</option>
+                        <option value="KB">KB</option>
+                        <option value="신한">신한</option>
+                        <option value="롯데">롯데</option>
+                        <option value="BC">BC</option>
+                        <option value="시티">시티</option>
+                        <option value="NH농협">NH농협</option>
+                    </select>
+                    <br><Br>
+                    <strong>할부 기간:</strong>  &nbsp;&nbsp;&nbsp;
+                    <select id="card_pay_month" name="card_pay_month">
+                        <option value="일시불" selected>일시불</option>
+                        <option value="2개월">2개월</option>
+                        <option value="3개월">3개월</option>
+                        <option value="4개월">4개월</option>
+                        <option value="5개월">5개월</option>
+                        <option value="6개월">6개월</option>
+                    </select>
                 </td>
             </tr>
             <tr id="tr_pay_phone" style="visibility:hidden">
                 <td>
                     <strong>휴대폰 번호 입력: </strong>
-                        <input  type="text" size="5" value=""  id="pay_order_tel1" name="pay_order_tel1" />-
-                        <input  type="text" size="5" value="" id="pay_order_tel2" name="pay_order_tel2" />-
-                        <input  type="text" size="5" value="" id="pay_order_tel3" name="pay_order_tel3" />
+                    <input  type="text" size="5" value=""  id="pay_order_tel1" name="pay_order_tel1" />-
+                    <input  type="text" size="5" value="" id="pay_order_tel2" name="pay_order_tel2" />-
+                    <input  type="text" size="5" value="" id="pay_order_tel3" name="pay_order_tel3" />
                 </td>
             </tr>
         </table>

@@ -14,6 +14,7 @@
 <head>
     <title>Title</title>
     <script type="text/javascript">
+        //구매하고자 하는 상품 체크 -> 총 가격 수정
         function calcGoodsPrice(bookPrice,obj){
             var totalPrice,final_total_price,totalNum;
             var goods_qty=document.getElementById("select_goods_qty");
@@ -98,11 +99,11 @@
         }
 
         function delete_cart_goods(cart_id){
-            var cart_id=Number(cart_id);
+            var cart_id=Number(cart_id);    //장바구니 번호
             var formObj=document.createElement("form");
             var i_cart = document.createElement("input");
-            i_cart.name="cart_id";
-            i_cart.value=cart_id;
+            i_cart.name="cart_id";  //속성 설정
+            i_cart.value=cart_id;   //장바구니 번호 값
 
             formObj.appendChild(i_cart);
             document.body.appendChild(formObj);
@@ -205,6 +206,8 @@
         </tr>
     </c:when>
     <c:otherwise>   <%--장바구니에 상품이 있다면--%>
+<%--   cnt.count-1은 JSTL의 <c:forEach> 태그에서 현재 반복되고 있는 항목의 인덱스를 나타냅니다.
+일반적으로 컬렉션의 인덱스는 0부터 시작합니다. 그러나 cnt.count는 1부터 시작합니다. 따라서 cnt.count-1을 사용하여 실제 컬렉션의 인덱스에 접근합니다.     --%>
         <tr>
         <form name="frm_order_all_cart">
         <c:forEach var="item" items="${myGoodsList }" varStatus="cnt">  <%--상품 상세 정보 - 장바구니 내 상품이 1개 이상--%>
@@ -244,14 +247,17 @@
                 <a href="javascript:fn_order_each_goods('${item.goods_id }','${item.goods_title }','${item.goods_sales_price}','${item.fileName}');">
                     <img width="75" alt=""  src="${contextPath}/resources/image/btn_order.jpg">
                 </a><br>
+                <%-- 나중에 주문--%>
                 <a href="#">
                     <img width="75" alt=""
                          src="${contextPath}/resources/image/btn_order_later.jpg">
                 </a><br>
-                <a href="#">
+                    <%-- 리스트에 넣기 --%>
+                    <a href="#">
                     <img width="75" alt=""
                          src="${contextPath}/resources/image/btn_add_list.jpg">
                 </A><br>
+                <%-- 장바구니에서 삭제하기 --%>
                 <a href="javascript:delete_cart_goods('${cart_id}');">
                 <img width="75" alt=""
                      src="${contextPath}/resources/image/btn_delete.jpg">

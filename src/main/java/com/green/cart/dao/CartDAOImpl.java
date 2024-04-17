@@ -24,7 +24,7 @@ public class CartDAOImpl  implements  CartDAO{
     public int insertGoodsInCart(CartVO cartVO) throws DataAccessException{
         int cart_id=selectMaxCartId();
         System.out.println("cart_id : " + cart_id);
-        cartVO.setCart_id(cart_id);
+        cartVO.setCart_id(cart_id); //장바구니 아이디 설정.
         System.out.println("cartVO getCart_id : " + cartVO.getCart_id());
         System.out.println("cartVO getGoods_id : " + cartVO.getGoods_id());
         System.out.println("cartVO getMember_id : " + cartVO.getMember_id());

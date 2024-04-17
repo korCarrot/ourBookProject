@@ -38,6 +38,7 @@ public class OrderControllerImpl extends BaseController implements OrderControll
                                        HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         System.out.println("orderEachGoods 에 들어옴");
+        System.out.println("orderEachGoods의 orderVO : " + orderVO);
 
         HttpSession session = request.getSession();
         Boolean isLogOn = (Boolean) session.getAttribute("isLogOn");   //로그인 상태
@@ -85,9 +86,9 @@ public class OrderControllerImpl extends BaseController implements OrderControll
     //최종 결제
     @Override                       //주문창에서 입력한 상품 수령자 정보와 배송지 정보를 Map에 바로 저장
     @RequestMapping(value="/payToOrderGoods.do" ,method = RequestMethod.POST)
-    public ModelAndView payToOrderGoods(Map<String, String> receiverMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView payToOrderGoods(@RequestParam Map<String, String> receiverMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     String viewName = getViewName(request);
-    System.out.println("receiverMap: " +receiverMap);   //*오류 : receiverMap이 현재 비어있다.
+    System.out.println("receiverMap: " + receiverMap);   //*오류 : receiverMap이 현재 비어있다.
         ModelAndView mav = new ModelAndView(viewName);
         HttpSession session=request.getSession();
 
@@ -96,6 +97,10 @@ public class OrderControllerImpl extends BaseController implements OrderControll
         String orderer_name=memberVO.getMember_name();  //주문자 이름
         String orderer_hp = memberVO.getHp1()+"-"+memberVO.getHp2()+"-"+memberVO.getHp3();  //핸드폰 번호
         List<OrderVO> myOrderList=(List<OrderVO>)session.getAttribute("myOrderList");   //주문 정보
+        System.out.println("member_id: "+member_id);
+        System.out.println("orderer_name: "+orderer_name);
+        System.out.println("orderer_hp: "+orderer_hp);
+        System.out.println("myOrderList: "+myOrderList);
 
         //주문창에서 입력한 수령자 정보, 배송지 정보를 주문 상품 정보 목록과 합침
         for(int i=0; i<myOrderList.size();i++){

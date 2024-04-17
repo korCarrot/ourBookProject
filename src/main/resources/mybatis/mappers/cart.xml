@@ -80,6 +80,7 @@
           and d.filetype='main_image'
            and g.goods_id in
       ]]>
+<!--        <foreach>의 collection 속성에는 컬렉션의 이름을 직접 지정. list, map, Array 등만 가능-->
         <foreach item="item" collection="list" open="(" separator="," close=")">
             #{item.goods_id}
         </foreach>

@@ -46,7 +46,7 @@ public class MemberControllerImpl extends BaseController implements MemberContro
             //상품 주문 과정에서 로그인 시 다시 주문 화면으로
             String action=(String)session.getAttribute("action");
             if(action!=null && action.equals("/order/orderEachGoods.do")){
-                mav.setViewName("forward:"+action); //****타일즈에서 어떻게 할지 모르는 상태. 잘 보자. 어떻게 받아서 어디로 가는지
+                mav.setViewName("forward:"+action); //로그인 안하고 상품 상세 화면에서 구매하기 누를 때 세션에 페이지 저장 후, 로그인하고 돌아감
             }
             //그 외에는 메인페이지로 이동
             else{
