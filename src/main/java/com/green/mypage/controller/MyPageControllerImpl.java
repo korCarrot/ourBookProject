@@ -32,17 +32,17 @@ public class MyPageControllerImpl extends BaseController implements MyPageContro
 
     @Override
     @RequestMapping(value="/myPageMain.do" ,method = RequestMethod.GET)
-    public ModelAndView myPageMain(@RequestParam(required = false,value="message")  String message,
+    public ModelAndView myPageMain(@RequestParam(required = false,value="message")  String message, //주문 취소시 결과 메시지를 받음
                                    HttpServletRequest request, HttpServletResponse response)  throws Exception {
         HttpSession session=request.getSession();
-        session.setAttribute("side_menu", "my_page");
+        session.setAttribute("side_menu", "my_page");   //마이페이지 왼쪽 메뉴로 설정
         String viewName=getViewName(request);
         ModelAndView mav = new ModelAndView(viewName);
 
         memberVO=(MemberVO)session.getAttribute("memberInfo");
         String member_id=memberVO.getMember_id();
         //회원 ID를 이용해 주문 상품을 조회합니다.
-        List<OrderVO> myOrderList=myPageService.listMyOrderGoods(member_id);
+        List<OrderVO> myOrderList=myPageService.listMyOrderGoods(member_id);    //회원아이디로 주문 상품을 조회
 
         mav.addObject("message", message);  //주문취소시 결과 메시지를 JSP로 전달
         mav.addObject("myOrderList", myOrderList);  //주문 상품 목록을 JSP로 전달
@@ -96,6 +96,7 @@ public class MyPageControllerImpl extends BaseController implements MyPageContro
         return mav;
     }
 
+//    주문 취소 (sql문의 배송상태 컬럼을 변경)
     @Override
     @RequestMapping(value="/cancelMyOrder.do" ,method = RequestMethod.POST)
     public ModelAndView cancelMyOrder(@RequestParam("order_id")  String order_id,

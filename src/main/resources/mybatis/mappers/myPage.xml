@@ -138,6 +138,7 @@
         ]]>
 	</select>
 
+<!--    주문 취소 -->
     <update id="updateMyOrderCancel" parameterType="String">
         update goods_order
         set delivery_state='cancel_order'
