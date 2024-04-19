@@ -84,6 +84,9 @@
             <if test=" member_birth_d!='' and member_birth_d!=null">
                 member_birth_d=#{member_birth_d},
             </if>
+            <if test=" member_birth_sl!='' and member_birth_sl!=null">
+                member_birth_sl=#{member_birth_sl},
+            </if>
             <if test=" tel1!='' and tel1!=null">
                 tel1=#{tel1},
             </if>
@@ -123,7 +126,7 @@
             <if test=" jibunAddress!='' and jibunAddress!=null">
                 jibunAddress=#{jibunAddress},
             </if>
-            <if test=" namujiAddress!='' and namujiAddress!=null">
+            <if test=" detailAddress!='' and detailAddress!=null">
                 detailAddress=#{detailAddress}
             </if>
         </set>

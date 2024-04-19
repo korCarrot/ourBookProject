@@ -108,30 +108,33 @@ public class MyPageControllerImpl extends BaseController implements MyPageContro
         return mav;
     }
 
+//   회원 정보 수정(마이페이지 -> 회원정보관리)
     @Override
     @RequestMapping(value="/myDetailInfo.do" ,method = RequestMethod.GET)
     public ModelAndView myDetailInfo(HttpServletRequest request, HttpServletResponse response)  throws Exception {
-        String viewName=(String)request.getAttribute("viewName");
+        String viewName=getViewName(request);
         ModelAndView mav = new ModelAndView(viewName);
         return mav;
     }
 
+//    회원 정보 수정 (myDetailInfo.jsp에서 ajax)
     @Override
     @RequestMapping(value="/modifyMyInfo.do" ,method = RequestMethod.POST)
-    public ResponseEntity modifyMyInfo(@RequestParam("attribute")  String attribute,
-                                       @RequestParam("value")  String value,
+    public ResponseEntity modifyMyInfo(@RequestParam("attribute")  String attribute,    //수정할 회원 정보 속성을 저장
+                                       @RequestParam("value")  String value,            //회원 정보의 속성 값을 저장
                                        HttpServletRequest request, HttpServletResponse response)  throws Exception {
         Map<String,String> memberMap=new HashMap<String,String>();
         String val[]=null;
         HttpSession session=request.getSession();
         memberVO=(MemberVO)session.getAttribute("memberInfo");
         String  member_id=memberVO.getMember_id();
+
         if(attribute.equals("member_birth")){
             val=value.split(",");
             memberMap.put("member_birth_y",val[0]);
             memberMap.put("member_birth_m",val[1]);
             memberMap.put("member_birth_d",val[2]);
-            memberMap.put("member_birth_gn",val[3]);
+            memberMap.put("member_birth_sl",val[3]);
         }else if(attribute.equals("tel")){
             val=value.split(",");
             memberMap.put("tel1",val[0]);
@@ -153,7 +156,7 @@ public class MyPageControllerImpl extends BaseController implements MyPageContro
             memberMap.put("zipcode",val[0]);
             memberMap.put("roadAddress",val[1]);
             memberMap.put("jibunAddress", val[2]);
-            memberMap.put("namujiAddress", val[3]);
+            memberMap.put("detailAddress", val[3]);
         }else {
             memberMap.put(attribute,value);
         }
@@ -162,13 +165,19 @@ public class MyPageControllerImpl extends BaseController implements MyPageContro
 
         //수정된 회원 정보를 다시 세션에 저장한다.
         memberVO=(MemberVO)myPageService.modifyMyInfo(memberMap);
+//        세션에 저장된 기존 회원 정보를 삭제한 후 갱신된 회원정보를 저장
         session.removeAttribute("memberInfo");
         session.setAttribute("memberInfo", memberVO);
 
         String message = null;
         ResponseEntity resEntity = null;
         HttpHeaders responseHeaders = new HttpHeaders();
-        message  = "mod_success";
+        if (memberVO != null) {
+            message = "mod_success";
+        } else {
+            message = "failed";
+        }
+
         resEntity =new ResponseEntity(message, responseHeaders, HttpStatus.OK);
         return resEntity;
     }

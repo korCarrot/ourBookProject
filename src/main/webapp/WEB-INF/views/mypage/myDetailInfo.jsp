@@ -67,21 +67,24 @@
 
     function selectBoxInit(){
     
-     var tel1='${memberInfo.tel1 }';
-     var hp1='${memberInfo.hp1}';
+     var tel1='${memberInfo.tel1 }';	//유선전화 국번을 저장
+     var hp1='${memberInfo.hp1}';		//휴대폰 국번을 저장
      var selTel1 = document.getElementById('tel1');
      var selHp1 = document.getElementById('hp1');
+	 // 유선전화, 휴대폰 국번을 선택하는 셀렉트 박스에 접근
      var optionTel1 = selTel1.options;
      var optionHp1 = selHp1.options;
      var val;
+	 // 유선전화 국번의 셀렉트 박스값을 tel1값으로 초기화
      for(var i=0; i<optionTel1.length;i++){
        val = optionTel1[i].value;
        if(tel1 == val){
     	   optionTel1[i].selected= true;
         break;
        }
-     }  
-     
+     }
+
+		// 휴대폰 국번의 셀렉트 박스값을 tel1값으로 초기화
      for(var i=0; i<optionHp1.length;i++){
          val = optionHp1[i].value;
          if(hp1 == val){
@@ -92,7 +95,8 @@
      
    }
 
-
+//수정 버튼을 누를시 수정할 정보를 담아서 함수 실행(if else문으로 해당 정보 수정)
+// for문 내에 if문 속 checked나 selected는 선택된 값을 가져오기 위한 조건문임.
 function fn_modify_member_info(attribute){
 	var value;
 	// alert(member_id);
@@ -114,7 +118,7 @@ function fn_modify_member_info(attribute){
 			var member_birth_y=frm_mod_member.member_birth_y;
 			var member_birth_m=frm_mod_member.member_birth_m;
 			var member_birth_d=frm_mod_member.member_birth_d;
-			var member_birth_gn=frm_mod_member.member_birth_gn;
+			var member_birth_sl=frm_mod_member.member_birth_sl;
 			
 			for(var i=0; member_birth_y.length;i++){
 			 	if(member_birth_y[i].selected){
@@ -137,9 +141,9 @@ function fn_modify_member_info(attribute){
 			}
 			
 			//alert("수정 년:"+value_y+","+value_m+","+value_d);
-			for(var i=0; member_birth_gn.length;i++){
-			 	if(member_birth_gn[i].checked){
-					value_gn=member_birth_gn[i].value;
+			for(var i=0; member_birth_sl.length;i++){
+			 	if(member_birth_sl[i].checked){
+					value_gn=member_birth_sl[i].value;
 					break;
 				} 
 			}
@@ -189,13 +193,13 @@ function fn_modify_member_info(attribute){
 			var zipcode=frm_mod_member.zipcode;
 			var roadAddress=frm_mod_member.roadAddress;
 			var jibunAddress=frm_mod_member.jibunAddress;
-			var namujiAddress=frm_mod_member.namujiAddress;
+			var detailAddress=frm_mod_member.detailAddress;
 			
 			value_zipcode=zipcode.value;
 			value_roadAddress=roadAddress.value;
 			value_jibunAddress=jibunAddress.value;
-			value_namujiAddress=namujiAddress.value;
-			value=value_zipcode+","+value_roadAddress+","+value_jibunAddress+","+value_namujiAddress;
+			value_detailAddress=detailAddress.value;
+			value=value_zipcode+","+value_roadAddress+","+value_jibunAddress+","+value_detailAddress;
 		}
 		console.log(attribute);
 	 
@@ -204,8 +208,8 @@ function fn_modify_member_info(attribute){
 			async : false, //false인 경우 동기식으로 처리한다.
 			url : "${contextPath}/mypage/modifyMyInfo.do",
 			data : {
-				attribute:attribute,
-				value:value,
+				attribute:attribute,	//변경하고자 하는 속성
+				value:value,	//변경하고자 하는 속성 값
 			},
 			success : function(data, textStatus) {
 				if(data.trim()=='mod_success'){
@@ -319,14 +323,14 @@ function fn_modify_member_info(attribute){
 					   	</c:forEach>
 					</select>일 <span style="padding-left:50px"></span>
 					   <c:choose>
-					    <c:when test="${memberInfo.member_birth_gn=='2' }"> 
-					  <input type="radio" name="member_birth_gn" value="2" checked />양력
+					    <c:when test="${memberInfo.member_birth_sl=='2' }">
+					  <input type="radio" name="member_birth_sl" value="2" checked />양력
 						<span style="padding-left:20px"></span> 
-						<input type="radio"  name="member_birth_gn" value="1" />음력
+						<input type="radio"  name="member_birth_sl" value="1" />음력
 						</c:when>
 						<c:otherwise>
-						  <input type="radio" name="member_birth_gn" value="2" />양력
-						  <input type="radio"  name="member_birth_gn" value="1" checked  />음력
+						  <input type="radio" name="member_birth_sl" value="2" />양력
+						  <input type="radio"  name="member_birth_sl" value="1" checked  />음력
 						</c:otherwise>
 						</c:choose>
 					</td>
@@ -437,7 +441,7 @@ function fn_modify_member_info(attribute){
 					  <p> 
 					   지번 주소:<br><input type="text" id="roadAddress"  name="roadAddress" size="50" value="${memberInfo.roadAddress }"><br><br>
 					  도로명 주소: <input type="text" id="jibunAddress" name="jibunAddress" size="50" value="${memberInfo.jibunAddress }"><br><br>
-					  나머지 주소: <input type="text"  name="namujiAddress" size="50" value="${memberInfo.namujiAddress }" />
+					  나머지 주소: <input type="text"  name="detailAddress" size="50" value="${memberInfo.detailAddress }" />
 					   </p>
 					</td>
 					<td>

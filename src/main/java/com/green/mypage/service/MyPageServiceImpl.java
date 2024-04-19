@@ -29,10 +29,11 @@ import java.util.Map;
             return myPageDAO.selectMyOrderHistoryList(dateMap);
         }
 
+//        회원정보가져오기 (id와 수정된 회원정보가 담긴 Map)
         public MemberVO  modifyMyInfo(Map memberMap) throws Exception{
             String member_id=(String)memberMap.get("member_id");
-            myPageDAO.updateMyInfo(memberMap);
-            return myPageDAO.selectMyDetailInfo(member_id);
+            myPageDAO.updateMyInfo(memberMap);  //회원정보 업데이트
+            return myPageDAO.selectMyDetailInfo(member_id); //업데이트 된 회원정보 가져오기
         }
 
         public void cancelOrder(String order_id) throws Exception{
