@@ -15,11 +15,13 @@ public class MyPageDAOImpl implements MyPageDAO {
     @Autowired
     private SqlSession sqlSession;
 
+//    주문상품리스트 조회
     public List<OrderVO> selectMyOrderGoodsList(String member_id) throws DataAccessException {
         List<OrderVO> orderGoodsList = sqlSession.selectList("mapper.mypage.selectMyOrderGoodsList", member_id);
         return orderGoodsList;
     }
 
+    //    주문 상품 상세 조회
     public List selectMyOrderInfo(String order_id) throws DataAccessException{
         List myOrderList=(List)sqlSession.selectList("mapper.mypage.selectMyOrderInfo",order_id);
         return myOrderList;

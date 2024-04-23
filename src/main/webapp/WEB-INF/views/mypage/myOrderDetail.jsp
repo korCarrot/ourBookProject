@@ -3,7 +3,7 @@
 	isELIgnored="false"%> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
-</head>
+
 <body>
 	<h1>1. 주문 상세정보</h1>
 	<table class="list_view">
@@ -23,7 +23,7 @@
 				    <td> ${item.order_id}</td>
 				     <td> ${item.pay_order_time}</td>
 					<td class="goods_image">
-					  <a href="${contextPath}/goods/goodsDetail.do?goods_id=${item.goods_id }">
+					  <a href="${contextPath}/goods/goodsDetail.do?goods_id=${item.goods_id }">	<%-- DB에서 goods_order에 있는 파일 네임을 잘못 저장해 썸네일 안나오는 오류있었음. 수정완료.--%>
 					    <IMG width="75" alt=""  src="${contextPath}/thumbnails.do?goods_id=${item.goods_id}&fileName=${item.goods_fileName}">
 					  </a>
 					</td>
@@ -54,6 +54,7 @@
 		<table>
 			<tbody>
 				<tr class="dot_line">
+					<%-- DB에 배송메세지랑 반대로 적어서 수정함. --%>
 					<td class="fixed_join">배송방법</td>
 					<td>
 					   ${myOrderList[0].delivery_method }
@@ -87,6 +88,7 @@
 				<tr class="dot_line">
 					<td class="fixed_join">배송 메시지</td>
 					<td>
+						<%-- DB에 배송방법이랑 반대로 적어서 수정함. --%>
 					${myOrderList[0].delivery_message}
 					</td>
 				</tr>

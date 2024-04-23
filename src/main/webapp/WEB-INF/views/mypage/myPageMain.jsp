@@ -22,6 +22,8 @@
 </c:if>
 <script>
 function fn_cancel_order(order_id){
+	// confirm("주문을 취소하시겠습니까?"): 사용자에게 주문을 취소할 것인지 물어보는 알림 창이 표시됩니다.
+	// 사용자가 확인을 클릭하면 answer 변수에 true가 저장되고, 취소를 클릭하면 false가 저장됩니다.
 	var answer=confirm("주문을 취소하시겠습니까?");
 	if(answer==true){
 		var formObj=document.createElement("form");
@@ -33,7 +35,7 @@ function fn_cancel_order(order_id){
 	    formObj.appendChild(i_order_id);
 	    document.body.appendChild(formObj); 
 	    formObj.method="post";
-	    formObj.action="${contextPath}/mypage/cancelMyOrder.do";
+	    formObj.action="${contextPath}/mypage/cancelMyOrder.do";	//id담아서 삭제문으로.
 	    formObj.submit();	
 	}
 }
@@ -42,7 +44,7 @@ function fn_cancel_order(order_id){
 </head>
 <body>
 <h1>최근주문내역
-    <A href="#"> <IMG  src="${contextPath}/resources/image/btn_more_see.jpg">  </A> 
+    <A href="#"> <IMG  src="${contextPath}/resources/image/btn_more_see.jpg">  </A> <%-- 더보기 --%>
 </h1>
 <table class="list_view">
 		<tbody align=center >
@@ -54,7 +56,7 @@ function fn_cancel_order(order_id){
 				<td>주문취소</td>
 			</tr>
       <c:choose>
-         <c:when test="${ empty myOrderList  }">	<%--주문한 상품--%>
+         <c:when test="${ empty myOrderList  }">	<%--주문한 상품x--%>
 		  <tr>
 		    <td colspan=5 class="fixed">
 				  <strong>주문한 상품이 없습니다.</strong>
@@ -62,12 +64,12 @@ function fn_cancel_order(order_id){
 		  </tr>
         </c:when>
         <c:otherwise>
-	      <c:forEach var="item" items="${myOrderList }"  varStatus="i">
+	      <c:forEach var="item" items="${myOrderList }"  varStatus="i">	<%--주문한 상품o--%>
 	       <c:choose> 
               <c:when test="${ pre_order_id != item.order_id}">
-                <c:choose>
+                <c:choose>	<%--주문한 상품 상태에 따른 색상변경 (하지만 적용되지 않고 있음)--%>
 	              <c:when test="${item.delivery_state=='delivery_prepared' }">
-	                <tr  bgcolor="lightgreen">    
+	                <tr bgcolor="lightgreen">
 	              </c:when>
 	              <c:when test="${item.delivery_state=='finished_delivering' }">
 	                <tr  bgcolor="lightgray">    

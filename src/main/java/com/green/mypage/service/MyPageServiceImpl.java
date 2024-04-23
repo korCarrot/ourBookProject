@@ -17,10 +17,12 @@ import java.util.Map;
         @Autowired
         private MyPageDAO myPageDAO;
 
+//        주문상품리스트 조회
         public List<OrderVO> listMyOrderGoods(String member_id) throws Exception {
             return myPageDAO.selectMyOrderGoodsList(member_id);
         }
 
+    //    주문 상품 상세 조회
         public List findMyOrderInfo(String order_id) throws Exception{
             return myPageDAO.selectMyOrderInfo(order_id);
         }

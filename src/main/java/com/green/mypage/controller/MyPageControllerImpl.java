@@ -30,6 +30,7 @@ public class MyPageControllerImpl extends BaseController implements MyPageContro
     @Autowired
     private MemberVO memberVO;
 
+//    마이페이지 메인 화면 - 주문상품리스트 조회
     @Override
     @RequestMapping(value="/myPageMain.do" ,method = RequestMethod.GET)
     public ModelAndView myPageMain(@RequestParam(required = false,value="message")  String message, //주문 취소시 결과 메시지를 받음
@@ -49,17 +50,19 @@ public class MyPageControllerImpl extends BaseController implements MyPageContro
 
         return mav;
     }
+
+//    주문 상품 상세 조회
     @Override
     @RequestMapping(value="/myOrderDetail.do" ,method = RequestMethod.GET)
     public ModelAndView myOrderDetail(@RequestParam("order_id")  String order_id,HttpServletRequest request, HttpServletResponse response)  throws Exception {
-        String viewName=(String)request.getAttribute("viewName");
+        String viewName=getViewName(request);
         ModelAndView mav = new ModelAndView(viewName);
         HttpSession session=request.getSession();
         MemberVO orderer=(MemberVO)session.getAttribute("memberInfo");
 
-        List<OrderVO> myOrderList=myPageService.findMyOrderInfo(order_id);
-        mav.addObject("orderer", orderer);
-        mav.addObject("myOrderList",myOrderList);
+        List<OrderVO> myOrderList=myPageService.findMyOrderInfo(order_id); //주문한 상품 상세정보
+        mav.addObject("orderer", orderer);  //주문자
+        mav.addObject("myOrderList",myOrderList);   //주문한 상품 상세정보
         return mav;
     }
 
