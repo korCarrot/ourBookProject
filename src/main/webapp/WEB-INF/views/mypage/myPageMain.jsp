@@ -66,7 +66,7 @@ function fn_cancel_order(order_id){
         <c:otherwise>
 	      <c:forEach var="item" items="${myOrderList }"  varStatus="i">	<%--주문한 상품o--%>
 	       <c:choose> 
-              <c:when test="${ pre_order_id != item.order_id}">
+              <c:when test="${ pre_order_id != item.order_id}">	<%--이전 주문 번호와 현재 주문 번호를 비교하여 다른 경우를 체크--%>
                 <c:choose>	<%--주문한 상품 상태에 따른 색상변경 (하지만 적용되지 않고 있음)--%>
 	              <c:when test="${item.delivery_state=='delivery_prepared' }">
 	                <tr bgcolor="lightgreen">
@@ -115,13 +115,13 @@ function fn_cancel_order(order_id){
 			   <c:when test="${item.delivery_state=='delivery_prepared'}">	<%-- 배송 준비중일 때 주문취소 --%>
 			       <input  type="button" onClick="fn_cancel_order('${item.order_id}')" value="주문취소"  />
 			   </c:when>
-			   <c:otherwise>												<%-- 배송 준비중일 때 주문취소 가능--%>
+			   <c:otherwise>
 			      <input  type="button" onClick="fn_cancel_order('${item.order_id}')" value="주문취소" disabled />
 			   </c:otherwise>
 			  </c:choose>
 			</td>
 			</tr>
-          <c:set  var="pre_order_id" value="${item.order_id}" />
+          <c:set  var="pre_order_id" value="${item.order_id}" /> <%-- 이전 주문 번호를 기억하고 다음 주문 번호와 비교할 수 있음 --%>
            </c:when>
       </c:choose>
 	   </c:forEach>

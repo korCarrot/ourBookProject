@@ -27,6 +27,7 @@ import java.util.Map;
             return myPageDAO.selectMyOrderInfo(order_id);
         }
 
+    //    주문내역/배송 조회
         public List<OrderVO> listMyOrderHistory(Map dateMap) throws Exception{
             return myPageDAO.selectMyOrderHistoryList(dateMap);
         }

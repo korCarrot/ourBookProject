@@ -66,19 +66,22 @@ public class MyPageControllerImpl extends BaseController implements MyPageContro
         return mav;
     }
 
+//    주문내역/배송 조회
     @Override
     @RequestMapping(value="/listMyOrderHistory.do" ,method = RequestMethod.GET)
     public ModelAndView listMyOrderHistory(@RequestParam Map<String, String> dateMap,
                                            HttpServletRequest request, HttpServletResponse response)  throws Exception {
-        String viewName=(String)request.getAttribute("viewName");
+        String viewName=getViewName(request);
         ModelAndView mav = new ModelAndView(viewName);
         HttpSession session=request.getSession();
         memberVO=(MemberVO)session.getAttribute("memberInfo");
-        String  member_id=memberVO.getMember_id();
+        String member_id=memberVO.getMember_id();
 
+//        listMyOrderHistory.jsp의 search_order_history()에서 가져온 정보
         String fixedSearchPeriod = dateMap.get("fixedSearchPeriod");
         String beginDate=null,endDate=null;
 
+//calcSearchPeriod : baaseController의 날짜 관련 메소드
         String [] tempDate=calcSearchPeriod(fixedSearchPeriod).split(",");
         beginDate=tempDate[0];
         endDate=tempDate[1];

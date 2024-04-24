@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public abstract class BaseController  {
-    private static final String CURR_IMAGE_REPO_PATH = "C:\\shopping\\file_repo";
+    private static final String CURR_IMAGE_REPO_PATH = "C:\\shopping_image\\file_repo";
 
     protected List<ImageFileVO> upload(MultipartHttpServletRequest multipartRequest) throws Exception{
         List<ImageFileVO> fileList= new ArrayList<ImageFileVO>();

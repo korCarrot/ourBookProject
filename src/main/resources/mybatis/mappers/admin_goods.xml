@@ -27,6 +27,7 @@
 		<result property="goods_sort" column="goods_sort" />
 		<result property="goods_writer_intro" column="goods_writer_intro" />
 		<result property="goods_intro" column="goods_intro" />
+		<result property="goods_padate" column="goods_padate" />
 		<result property="goods_contents_order" column="goods_contents_order" javaType="java.lang.String" jdbcType="CLOB"  />
 	</resultMap>	
 
@@ -36,9 +37,11 @@
 	   <result property="reg_id" column="reg_id" />
 	   <result property="image_id" column="image_id" />
 	   <result property="fileType" column="fileType" />
+		<result property="rgdate" column="rgdate" />
 	</resultMap>
-	
-	<resultMap id="orderGoodsResult" type="OrderVO">
+
+	<resultMap id="orderGoodsResult" type="orderVO">
+		<result property="order_seq_num" column="order_seq_num" />
 		<result property="order_id" column="order_id" />
 		<result property="member_id" column="member_id" />
 		<result property="goods_id" column="goods_id" />
@@ -46,41 +49,44 @@
 		<result property="goods_sales_price" column="goods_sales_price" />
 		<result property="order_total_price" column="order_total_price" />
 		<result property="order_goods_qty" column="order_goods_qty" />
-		
+
 		<result property="orderer_name" column="orderer_name" />
 		<result property="receiver_name" column="receiver_name" />
 		<result property="receiver_hp1" column="receiver_hp1" />
 		<result property="receiver_hp2" column="receiver_hp2" />
 		<result property="receiver_hp3" column="receiver_hp3" />
-		
+
 		<result property="receiver_tel1" column="receiver_tel1" />
 		<result property="receiver_tel2" column="receiver_tel2" />
 		<result property="receiver_tel3" column="receiver_tel3" />
 		<result property="delivery_address" column="delivery_address" />
 		<result property="delivery_message" column="delivery_message" />
-		
+
 		<result property="delivery_method" column="delivery_method" />
 		<result property="gift_wrapping" column="gift_wrapping" />
 		<result property="pay_method" column="pay_method" />
 		<result property="card_com_name" column="card_com_name" />
 		<result property="card_pay_month" column="card_pay_month" />
-		
+
 		<result property="pay_orderer_hp_num" column="pay_orderer_hp_num" />
+		<result property="orderer_hp" column="orderer_hp" />
 		<result property="pay_order_time" column="pay_order_time" />
 		<result property="delivery_state" column="delivery_state" />
 		<result property="final_total_price" column="final_total_price" />
-		<result property="goods_qty" column="goods_qty" />
-		
+		<result property="order_goods_qty" column="order_goods_qty" />
+
 		<result property="goods_fileName" column="goods_fileName" />
 	</resultMap>
 
+<!--	새 상품 등록-->
+<!--	VARCHAR는 매개변수의 JDBC 타입을 지정하는 부분입니다. 이 경우 VARCHAR 타입으로 매핑됨을 의미-->
 	<insert id="insertNewGoods" parameterType="java.util.Map"   >
 		<selectKey resultType="String" keyProperty="goods_id" order="BEFORE">
 	    	select seq_goods_id.nextval from dual
 	    </selectKey>
 	    
 	    <![CDATA[
-		   insert into t_shopping_goods(
+		   insert into goods(
 		                goods_id, 
 		                goods_sort,
                     goods_title,
@@ -123,17 +129,19 @@
 					  			      #{goods_publisher_comment },
 					  			      #{goods_recommendation },	
 					  			      #{goods_contents_order:VARCHAR}
+
 					 			 )
 		]]>
 	</insert>
 
+<!--	상품 이미지 등록-->
 		<insert id="insertGoodsImageFile" parameterType="imageFileVO"   >
 
 		<selectKey resultType="int" keyProperty="image_id" order="BEFORE">
 	    	select seq_image_id.nextval from dual
 	    </selectKey>
 	    <![CDATA[
-		   insert into t_goods_detail_image (image_id,
+		   insert into goods_detail_image (image_id,
 		                                     goods_id,
 																				 fileName,
 																				 fileType,
