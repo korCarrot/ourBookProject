@@ -23,12 +23,12 @@ public class AdminGoodsServiceImpl implements AdminGoodsService {
 	
 	@Override
 	public int addNewGoods(Map newGoodsMap) throws Exception{
-		int goods_id = adminGoodsDAO.insertNewGoods(newGoodsMap);
+		int goods_id = adminGoodsDAO.insertNewGoods(newGoodsMap);	//상품 정보를 테이블에 추가
 		ArrayList<ImageFileVO> imageFileList = (ArrayList)newGoodsMap.get("imageFileList");
-		for(ImageFileVO imageFileVO : imageFileList) {
+		for(ImageFileVO imageFileVO : imageFileList) {	//각 이미지 정보에 상품 정보를 설정
 			imageFileVO.setGoods_id(goods_id);
 		}
-		adminGoodsDAO.insertGoodsImageFile(imageFileList);
+		adminGoodsDAO.insertGoodsImageFile(imageFileList);	//이미지 정보를 이미지 테이블에 추가
 		return goods_id;
 	}
 	

@@ -16,7 +16,8 @@ import java.util.Map;
 public class AdminGoodsDAOImpl  implements AdminGoodsDAO{
 	@Autowired
 	private SqlSession sqlSession;
-	
+
+	//상품 정보를 테이블에 추가
 	@Override
 	public int insertNewGoods(Map newGoodsMap) throws DataAccessException {
 		sqlSession.insert("mapper.admin.goods.insertNewGoods",newGoodsMap);

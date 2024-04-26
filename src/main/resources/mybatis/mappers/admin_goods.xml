@@ -143,19 +143,22 @@
 	    <![CDATA[
 		   insert into goods_detail_image (image_id,
 		                                     goods_id,
-																				 fileName,
-																				 fileType,
-																				 reg_id)
-											   					values(#{image_id},
-											   					 			 #{goods_id},
-											   							 	 #{fileName},
-											   								 #{fileType},
-											   								 #{reg_id} )
+											 fileName,
+											 fileType,
+											 reg_id)
+									values(#{image_id},
+										 #{goods_id},
+										 #{fileName},
+										 #{fileType},
+										 #{reg_id} )
 		]]>
 	</insert>
 
+<!--	rowNum은 Oracle에서 각 행에 할당되는 일련번호-->
+<!--	to_char 함수를 사용하여 날짜 필드를 원하는 형식으로 변환-->
 	<select id="selectNewGoodsList" resultMap="goodsResult"   parameterType="java.util.Map"  >
 	    <![CDATA[
+
 		  select * from (
 			   select rowNum as recNum,
 			   		  goods_id,
@@ -163,7 +166,7 @@
 			          goods_writer,
 			          goods_publisher,
 			          goods_sales_price,
-			          to_char(goods_creDate,'YYYY-MM-DD')  as goods_creDate,
+			          to_char(goods_paDate,'YYYY-MM-DD')  as goods_paDate,
 			          to_char(goods_published_date,'YYYY-MM-DD') as goods_published_date
 			       from (
 			             select  goods_id,
@@ -171,11 +174,11 @@
 			             		 goods_writer,
 			             		 goods_publisher,
 			             		 goods_sales_price,
-			             		 goods_creDate,
+			             		 goods_paDate,
 			             		 goods_published_date
-			              from t_shopping_goods 
-			                where  to_char(goods_creDate,'YYYY-MM-DD')  between #{beginDate} and #{endDate}
-			               order by goods_creDate desc
+			              from goods
+			                where  to_char(goods_paDate,'YYYY-MM-DD')  between #{beginDate} and #{endDate}
+			               order by goods_paDate desc
 					    )
 				)							
 			where				
@@ -227,9 +230,9 @@
     	]]>
 	</select>	
 	
-	
+<!-- 상품 정보 수정 -->
 <update id="updateGoodsInfo" parameterType="java.util.HashMap" >
-	   update t_shopping_goods
+	   update goods
 	    <set> 
 	      <if test=" goods_sort!='' and goods_sort!=null">
 	        goods_sort=#{goods_sort},
@@ -291,8 +294,9 @@
 	
 	</update>	
 
+<!-- 상품 이미지 정보 수정 -->
 	<update id="updateGoodsImage" parameterType="imageFileVO">
-		update t_goods_detail_image
+		update goods_detail_image
 		set fileName=#{fileName}
 		where	 
 		goods_id=#{goods_id} and image_id=#{image_id}

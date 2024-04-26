@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,21 +33,22 @@ public class AdminGoodsControllerImpl extends BaseController  implements AdminGo
 	private static final String CURR_IMAGE_REPO_PATH = "C:\\shopping_image\\file_repo";
 	@Autowired
 	private AdminGoodsService adminGoodsService;
-	
+
+	//관리자 페이지
 	@RequestMapping(value="/adminGoodsMain.do" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView adminGoodsMain(@RequestParam Map<String, String> dateMap,
 			                           HttpServletRequest request, HttpServletResponse response)  throws Exception {
-		String viewName=(String)request.getAttribute("viewName");
+		String viewName=getViewName(request);
 		ModelAndView mav = new ModelAndView(viewName);
 		HttpSession session=request.getSession();
-		session=request.getSession();
-		session.setAttribute("side_menu", "admin_mode"); //���������� ���̵� �޴��� �����Ѵ�.
+		session.setAttribute("side_menu", "admin_mode");//마이페이지 사이드 메뉴로 설정한다.
 		
 		String fixedSearchPeriod = dateMap.get("fixedSearchPeriod");
 		String section = dateMap.get("section");
 		String pageNum = dateMap.get("pageNum");
 		String beginDate=null,endDate=null;
-		
+
+		//검색날짜
 		String [] tempDate=calcSearchPeriod(fixedSearchPeriod).split(",");
 		beginDate=tempDate[0];
 		endDate=tempDate[1];
@@ -82,15 +84,21 @@ public class AdminGoodsControllerImpl extends BaseController  implements AdminGo
 		
 	}
 	
-
-	
+//상품 등록 폼
+	@RequestMapping(value = "/addNewGoodsForm.do", method = RequestMethod.GET)
+	public ModelAndView addNewGoodsForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName=getViewName(request);
+		ModelAndView mav = new ModelAndView(viewName);
+		return mav;
+	}
+	//상품 등록
 	@RequestMapping(value="/addNewGoods.do" ,method={RequestMethod.POST})
 	public ResponseEntity addNewGoods(MultipartHttpServletRequest multipartRequest, HttpServletResponse response)  throws Exception {
 		multipartRequest.setCharacterEncoding("utf-8");
-		response.setContentType("text/html; charset=UTF-8");
 		String imageFileName=null;
 		
 		Map newGoodsMap = new HashMap();
+		//상품 정보 map에 저장
 		Enumeration enu=multipartRequest.getParameterNames();
 		while(enu.hasMoreElements()){
 			String name=(String)enu.nextElement();
@@ -103,12 +111,12 @@ public class AdminGoodsControllerImpl extends BaseController  implements AdminGo
 		String reg_id = memberVO.getMember_id();
 		
 		
-		List<ImageFileVO> imageFileList =upload(multipartRequest);
+		List<ImageFileVO> imageFileList =upload(multipartRequest);	//첨부한 이미지 정보를 가져옴
 		if(imageFileList!= null && imageFileList.size()!=0) {
 			for(ImageFileVO imageFileVO : imageFileList) {
 				imageFileVO.setReg_id(reg_id);
 			}
-			newGoodsMap.put("imageFileList", imageFileList);
+			newGoodsMap.put("imageFileList", imageFileList); //이미지 정보에 상품 관리자 ID를 속성으로 추가
 		}
 		
 		String message = null;
@@ -126,7 +134,7 @@ public class AdminGoodsControllerImpl extends BaseController  implements AdminGo
 				}
 			}
 			message= "<script>";
-			message += " alert('����ǰ�� �߰��߽��ϴ�.');";
+			message += " alert('새상품을 추가했습니다.');";
 			message +=" location.href='"+multipartRequest.getContextPath()+"/admin/goods/addNewGoodsForm.do';";
 			message +=("</script>");
 		}catch(Exception e) {
@@ -137,9 +145,9 @@ public class AdminGoodsControllerImpl extends BaseController  implements AdminGo
 					srcFile.delete();
 				}
 			}
-			
+
 			message= "<script>";
-			message += " alert('������ �߻��߽��ϴ�. �ٽ� �õ��� �ּ���');";
+			message += " alert('오류가 발생했습니다. 다시 시도해 주세요');";
 			message +=" location.href='"+multipartRequest.getContextPath()+"/admin/goods/addNewGoodsForm.do';";
 			message +=("</script>");
 			e.printStackTrace();
@@ -151,7 +159,7 @@ public class AdminGoodsControllerImpl extends BaseController  implements AdminGo
 	@RequestMapping(value="/modifyGoodsForm.do" ,method={RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView modifyGoodsForm(@RequestParam("goods_id") int goods_id,
 			                            HttpServletRequest request, HttpServletResponse response)  throws Exception {
-		String viewName=(String)request.getAttribute("viewName");
+		String viewName=getViewName(request);
 		ModelAndView mav = new ModelAndView(viewName);
 		
 		Map goodsMap=adminGoodsService.goodsDetail(goods_id);
@@ -304,4 +312,41 @@ public class AdminGoodsControllerImpl extends BaseController  implements AdminGo
 		}
 	}
 
+
+	//getViewName
+	private String getViewName(HttpServletRequest request) throws Exception {
+		String contextPath = request.getContextPath();
+		System.out.println("contextPath : " + contextPath);
+		String uri = (String) request.getAttribute("javax.servlet.include.request_uri");
+		System.out.println("uri: "+ uri);
+		if (uri == null || uri.trim().equals("")) {
+			uri = request.getRequestURI();
+		}
+		System.out.println("uri: "+ uri);
+		int begin = 0;
+		if (!((contextPath == null) || ("".equals(contextPath)))) {
+			begin = contextPath.length();
+		}
+
+		int end;
+		if (uri.indexOf(";") != -1) {
+			end = uri.indexOf(";");
+		} else if (uri.indexOf("?") != -1) {
+			end = uri.indexOf("?");
+		} else {
+			end = uri.length();
+		}
+
+		String fileName = uri.substring(begin, end);
+		System.out.println("fileName: "+ fileName);
+		if (fileName.indexOf(".") != -1) {
+			fileName = fileName.substring(0, fileName.lastIndexOf("."));
+		}
+		if (fileName.lastIndexOf("/") != -1) {
+			fileName = fileName.substring(fileName.lastIndexOf("/",1), fileName.length());
+		}
+		System.out.println("fileName: "+ fileName);
+		return fileName;
+
+	}
 }
