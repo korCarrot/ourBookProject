@@ -2,6 +2,8 @@ package com.green.goods.vo;
 
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
+
 @Component("imageFileVO")
 public class ImageFileVO {
     private int image_id;
@@ -9,6 +11,8 @@ public class ImageFileVO {
     private String fileName;
     private String reg_id;
     private String fileType;
+
+    private Date rgdate;
 
 
     public ImageFileVO() {
@@ -70,6 +74,11 @@ public class ImageFileVO {
     }
 
 
+    public Date getRgdate() {
+        return rgdate;
+    }
 
-
+    public void setRgdate(Date rgdate) {
+        this.rgdate = rgdate;
+    }
 }

@@ -22,4 +22,5 @@ public interface AdminGoodsController {
             HttpServletRequest request, HttpServletResponse response)  throws Exception;
 	public void  addNewGoodsImage(MultipartHttpServletRequest multipartRequest, HttpServletResponse response)  throws Exception;
 	public void modifyGoodsImageInfo(MultipartHttpServletRequest multipartRequest, HttpServletResponse response)  throws Exception;
+	public void removeGoods(@RequestParam("goods_id") String goods_id, HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

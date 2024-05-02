@@ -44,7 +44,8 @@ public class AdminGoodsDAOImpl  implements AdminGoodsDAO{
 		goodsBean=(GoodsVO)sqlSession.selectOne("mapper.admin.goods.selectGoodsDetail",goods_id);
 		return goodsBean;
 	}
-	
+
+//	이미지 상세 정보
 	@Override
 	public List selectGoodsImageFileList(int goods_id) throws DataAccessException {
 		List imageList=new ArrayList();
@@ -95,9 +96,8 @@ public class AdminGoodsDAOImpl  implements AdminGoodsDAO{
 	}
 
 
-
-
-
-	
-
+	@Override
+	public void removeGoods(String goods_id) throws DataAccessException {
+		sqlSession.delete("mapper.admin.goods.removeGoods", goods_id);
+	}
 }

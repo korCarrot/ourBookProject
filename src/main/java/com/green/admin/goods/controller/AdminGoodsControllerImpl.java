@@ -162,12 +162,13 @@ public class AdminGoodsControllerImpl extends BaseController  implements AdminGo
 		String viewName=getViewName(request);
 		ModelAndView mav = new ModelAndView(viewName);
 		
-		Map goodsMap=adminGoodsService.goodsDetail(goods_id);
+		Map goodsMap=adminGoodsService.goodsDetail(goods_id);	//상품 1개 상세 정보 + 이미지 상세 정보
 		mav.addObject("goodsMap",goodsMap);
 		
 		return mav;
 	}
-	
+
+//	상품 상세 정보 수정
 	@RequestMapping(value="/modifyGoodsInfo.do" ,method={RequestMethod.POST})
 	public ResponseEntity modifyGoodsInfo( @RequestParam("goods_id") String goods_id,
 			                     @RequestParam("attribute") String attribute,
@@ -193,7 +194,6 @@ public class AdminGoodsControllerImpl extends BaseController  implements AdminGo
 	public void modifyGoodsImageInfo(MultipartHttpServletRequest multipartRequest, HttpServletResponse response)  throws Exception {
 		System.out.println("modifyGoodsImageInfo");
 		multipartRequest.setCharacterEncoding("utf-8");
-		response.setContentType("text/html; charset=utf-8");
 		String imageFileName=null;
 		
 		Map goodsMap = new HashMap();
@@ -276,7 +276,7 @@ public class AdminGoodsControllerImpl extends BaseController  implements AdminGo
 					imageFileVO.setReg_id(reg_id);
 				}
 				
-			    adminGoodsService.addNewGoodsImage(imageFileList);
+			    adminGoodsService.addNewGoodsImage(imageFileList);	//이미지 등록
 				for(ImageFileVO  imageFileVO:imageFileList) {
 					imageFileName = imageFileVO.getFileName();
 					File srcFile = new File(CURR_IMAGE_REPO_PATH+"\\"+"temp"+"\\"+imageFileName);
@@ -312,6 +312,12 @@ public class AdminGoodsControllerImpl extends BaseController  implements AdminGo
 		}
 	}
 
+//	등록 상품 삭제
+	@Override
+	@RequestMapping(value = "/removeGoods.do", method = RequestMethod.POST)
+	public void removeGoods(@RequestParam("goods_id") String goods_id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		adminGoodsService.removeGoods(goods_id);
+	}
 
 	//getViewName
 	private String getViewName(HttpServletRequest request) throws Exception {

@@ -32,10 +32,10 @@
 	</resultMap>	
 
 	<resultMap id="imageResult" type="ImageFileVO">
+		<result property="image_id" column="image_id" />
 	   <result property="goods_id" column="goods_id" />
 	   <result property="fileName" column="fileName" />
 	   <result property="reg_id" column="reg_id" />
-	   <result property="image_id" column="image_id" />
 	   <result property="fileType" column="fileType" />
 		<result property="rgdate" column="rgdate" />
 	</resultMap>
@@ -190,7 +190,7 @@
 		  select * from (
 			    select rowNum as recNum,t.*
 			       from (
-			              select  *  from t_shopping_order 
+			              select  *  from goods_order
 			              where to_char(pay_order_time,'yyyy-mm-dd')  between #{beginDate} and #{endDate}
 			                <if test="search_type=='orderer_id'">
 			                  AND orderer_id=#{search_word}
@@ -213,7 +213,7 @@
 	
 	<select id="selectGoodsDetail" resultMap="goodsResult"   parameterType="String"  >
 	    <![CDATA[
-		     select g.*,to_char(g.goods_published_date,'YYYY-MM-DD') as goods_published_date, d.fileName from t_shopping_goods g, t_goods_detail_image d
+		     select g.*,to_char(g.goods_published_date,'YYYY-MM-DD') as goods_published_date, d.fileName from goods g, goods_detail_image d
 	        where g.goods_id=d.goods_id
 	        and d.filetype='main_image'
 	        and g.goods_id=#{goods_id}
@@ -221,9 +221,10 @@
     	]]>
 	</select>
 
+<!-- 이미지 상세 정보 -->
 	<select id="selectGoodsImageFileList" resultMap="imageResult"   parameterType="String"  >
 	    <![CDATA[
-		    	select * from  t_goods_detail_image 
+		    	select * from  goods_detail_image
 		    	where  
 			    goods_id=#{goods_id}
 			    order by image_id asc
@@ -301,14 +302,15 @@
 		where	 
 		goods_id=#{goods_id} and image_id=#{image_id}
 	</update>
-	
+
+<!-- 이미지 삭제 -->
 	<delete id="deleteGoodsImage" parameterType="String">
-	  delete from t_goods_detail_image
+	  delete from goods_detail_image
 	  where image_id=#{image_id}
 	</delete>
 	
 <update id="updateOrderGoods" parameterType="java.util.HashMap" >
-	   update t_shopping_order
+	   update goods_order
 	    <set> 
 	      <if test=" delivery_state!='' and delivery_state!=null">
 	        delivery_state=#{delivery_state},
@@ -320,6 +322,11 @@
 	    where 
 	    order_id=#{order_id}
 	
-	</update>		
+	</update>
+
+	<delete id="removeGoods" parameterType="String">
+		delete from goods
+		where goods_id=#{goods_id}
+	</delete>
 </mapper>
 

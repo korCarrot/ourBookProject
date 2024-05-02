@@ -200,6 +200,7 @@ function  calcPeriod(search_period){
 				<td>상품가격</td>
 				<td>입고일자</td>
 				<td>출판일</td>
+				<td>삭제</td>
 			</tr>
    <c:choose>
      <c:when test="${empty newGoodsList }">			
@@ -216,6 +217,7 @@ function  calcPeriod(search_period){
 				  <strong>${item.goods_id }</strong>
 				</TD>
 				<TD >
+					<%--등록한 상품 수정하러 이동--%>
 				 <a href="${pageContext.request.contextPath}/admin/goods/modifyGoodsForm.do?goods_id=${item.goods_id}">
 				    <strong>${item.goods_title } </strong>
 				 </a> 
@@ -239,6 +241,11 @@ function  calcPeriod(search_period){
 					   <c:out value="${arr[0]}" />
 					</strong>
 				</td>
+				 <td>
+					 <a href="${pageContext.request.contextPath}/admin/goods/removeGoods.do?goods_id=${item.goods_id}">
+					 상품 삭제
+					 </a>
+				 </td>
 				
 			</TR>
 	</c:forEach>

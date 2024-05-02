@@ -39,8 +39,8 @@ public class AdminGoodsServiceImpl implements AdminGoodsService {
 	@Override
 	public Map goodsDetail(int goods_id) throws Exception {
 		Map goodsMap = new HashMap();
-		GoodsVO goodsVO=adminGoodsDAO.selectGoodsDetail(goods_id);
-		List imageFileList =adminGoodsDAO.selectGoodsImageFileList(goods_id);
+		GoodsVO goodsVO=adminGoodsDAO.selectGoodsDetail(goods_id);	//상품 1개 상세 정보
+		List imageFileList =adminGoodsDAO.selectGoodsImageFileList(goods_id);  //상품 1개 이미지 상세 정보
 		goodsMap.put("goods", goodsVO);
 		goodsMap.put("imageFileList", imageFileList);
 		return goodsMap;
@@ -79,7 +79,9 @@ public class AdminGoodsServiceImpl implements AdminGoodsService {
 	public void addNewGoodsImage(List imageFileList) throws Exception{
 		adminGoodsDAO.insertGoodsImageFile(imageFileList);
 	}
-	
 
-	
+	@Override
+	public void removeGoods(String goods_id) throws Exception {
+//		adminGoodsDAO
+	}
 }
