@@ -29,7 +29,7 @@ public class AdminOrderControllerImpl extends BaseController  implements AdminOr
 	@RequestMapping(value="/adminOrderMain.do" ,method={RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView adminOrderMain(@RequestParam Map<String, String> dateMap,
 			                          HttpServletRequest request, HttpServletResponse response)  throws Exception {
-		String viewName=(String)request.getAttribute("viewName");
+		String viewName=getViewName(request);
 		ModelAndView mav = new ModelAndView(viewName);
 
 		String fixedSearchPeriod = dateMap.get("fixedSearchPeriod");
@@ -77,7 +77,7 @@ public class AdminOrderControllerImpl extends BaseController  implements AdminOr
 	@RequestMapping(value="/modifyDeliveryState.do" ,method={RequestMethod.POST})
 	public ResponseEntity modifyDeliveryState(@RequestParam Map<String, String> deliveryMap, 
 			                        HttpServletRequest request, HttpServletResponse response)  throws Exception {
-		adminOrderService.modifyDeliveryState(deliveryMap);
+		adminOrderService.modifyDeliveryState(deliveryMap);	//배송 상태 변경
 		
 		String message = null;
 		ResponseEntity resEntity = null;
@@ -87,16 +87,56 @@ public class AdminOrderControllerImpl extends BaseController  implements AdminOr
 		return resEntity;
 		
 	}
-	
+
+//	주문 상품의 상세 정보를 조회합니다.
 	@Override
 	@RequestMapping(value="/orderDetail.do" ,method={RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView orderDetail(@RequestParam("order_id") int order_id, 
 			                      HttpServletRequest request, HttpServletResponse response)  throws Exception {
-		String viewName=(String)request.getAttribute("viewName");
+		String viewName=getViewName(request);
 		ModelAndView mav = new ModelAndView(viewName);
 		Map orderMap =adminOrderService.orderDetail(order_id);
 		mav.addObject("orderMap", orderMap);
 		return mav;
 	}
-	
+
+
+	//getViewName
+	private String getViewName(HttpServletRequest request) throws Exception {
+		String contextPath = request.getContextPath();
+		System.out.println("contextPath : " + contextPath);
+		String uri = (String) request.getAttribute("javax.servlet.include.request_uri");
+		System.out.println("uri: "+ uri);
+		if (uri == null || uri.trim().equals("")) {
+			uri = request.getRequestURI();
+		}
+		System.out.println("uri: "+ uri);
+		int begin = 0;
+		if (!((contextPath == null) || ("".equals(contextPath)))) {
+			begin = contextPath.length();
+		}
+
+		int end;
+		if (uri.indexOf(";") != -1) {
+			end = uri.indexOf(";");
+		} else if (uri.indexOf("?") != -1) {
+			end = uri.indexOf("?");
+		} else {
+			end = uri.length();
+		}
+
+		String fileName = uri.substring(begin, end);
+		System.out.println("fileName: "+ fileName);
+		if (fileName.indexOf(".") != -1) {
+			fileName = fileName.substring(0, fileName.lastIndexOf("."));
+		}
+		if (fileName.lastIndexOf("/") != -1) {
+			fileName = fileName.substring(fileName.lastIndexOf("/",1), fileName.length());
+		}
+		System.out.println("fileName: "+ fileName);
+		return fileName;
+
+	}
 }
+
+

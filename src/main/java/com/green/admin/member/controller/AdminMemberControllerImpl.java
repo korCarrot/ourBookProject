@@ -26,7 +26,7 @@ public class AdminMemberControllerImpl extends BaseController  implements AdminM
 	@RequestMapping(value="/adminMemberMain.do" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView adminGoodsMain(@RequestParam Map<String, String> dateMap,
 			                           HttpServletRequest request, HttpServletResponse response)  throws Exception{
-		String viewName=(String)request.getAttribute("viewName");
+		String viewName = getViewName(request);
 		ModelAndView mav = new ModelAndView(viewName);
 
 		String fixedSearchPeriod = dateMap.get("fixedSearchPeriod");
@@ -71,7 +71,7 @@ public class AdminMemberControllerImpl extends BaseController  implements AdminM
 	}
 	@RequestMapping(value="/memberDetail.do" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView memberDetail(HttpServletRequest request, HttpServletResponse response)  throws Exception{
-		String viewName=(String)request.getAttribute("viewName");
+		String viewName = getViewName(request);
 		ModelAndView mav = new ModelAndView(viewName);
 		String member_id=request.getParameter("member_id");
 		MemberVO member_info=adminMemberService.memberDetail(member_id);
@@ -92,7 +92,7 @@ public class AdminMemberControllerImpl extends BaseController  implements AdminM
 			memberMap.put("member_birth_y",val[0]);
 			memberMap.put("member_birth_m",val[1]);
 			memberMap.put("member_birth_d",val[2]);
-			memberMap.put("member_birth_gn",val[3]);
+			memberMap.put("member_birth_sl",val[3]);
 		}else if(mod_type.equals("tel")){
 			val=value.split(",");
 			memberMap.put("tel1",val[0]);
@@ -115,7 +115,7 @@ public class AdminMemberControllerImpl extends BaseController  implements AdminM
 			memberMap.put("zipcode",val[0]);
 			memberMap.put("roadAddress",val[1]);
 			memberMap.put("jibunAddress", val[2]);
-			memberMap.put("namujiAddress", val[3]);
+			memberMap.put("detailAddress", val[3]);
 		}
 		
 		memberMap.put("member_id", member_id);
@@ -139,6 +139,43 @@ public class AdminMemberControllerImpl extends BaseController  implements AdminM
 		mav.setViewName("redirect:/admin/member/adminMemberMain.do");
 		return mav;
 		
+	}
+
+	//getViewName
+	private String getViewName(HttpServletRequest request) throws Exception {
+		String contextPath = request.getContextPath();
+		System.out.println("contextPath : " + contextPath);
+		String uri = (String) request.getAttribute("javax.servlet.include.request_uri");
+		System.out.println("uri: "+ uri);
+		if (uri == null || uri.trim().equals("")) {
+			uri = request.getRequestURI();
+		}
+		System.out.println("uri: "+ uri);
+		int begin = 0;
+		if (!((contextPath == null) || ("".equals(contextPath)))) {
+			begin = contextPath.length();
+		}
+
+		int end;
+		if (uri.indexOf(";") != -1) {
+			end = uri.indexOf(";");
+		} else if (uri.indexOf("?") != -1) {
+			end = uri.indexOf("?");
+		} else {
+			end = uri.length();
+		}
+
+		String fileName = uri.substring(begin, end);
+		System.out.println("fileName: "+ fileName);
+		if (fileName.indexOf(".") != -1) {
+			fileName = fileName.substring(0, fileName.lastIndexOf("."));
+		}
+		if (fileName.lastIndexOf("/") != -1) {
+			fileName = fileName.substring(fileName.lastIndexOf("/",1), fileName.length());
+		}
+		System.out.println("fileName: "+ fileName);
+		return fileName;
+
 	}
 		
 }

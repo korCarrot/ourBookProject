@@ -14,7 +14,7 @@
 		<result property="member_birth_m" column="member_birth_m" />
 		<result property="member_birth_d" column="member_birth_d" />
 		
-		<result property="member_birth_gn" column="member_birth_gn" />
+		<result property="member_birth_sl" column="member_birth_sl" />
 		<result property="tel1" column="tel1" />
 		<result property="tel2" column="tel2" />
 		<result property="tel3" column="tel3" />
@@ -30,15 +30,16 @@
 		<result property="zipcode" column="zipcode" />
 		<result property="roadAddress" column="roadAddress" />
 		<result property="jibunAddress" column="jibunAddress" />
-		<result property="namujiAddress" column="namujiAddress" />
+		<result property="detailAddress" column="detailAddress" />
 		<result property="joinDate" column="joinDate" />
 		<result property="del_yn" column="del_yn" />
 	</resultMap>
 <select id="listMember" resultMap="memberResult"   parameterType="java.util.HashMap"  >
-		  select * from (
+		  select * from
+		               (
 			    select rowNum as recNum,t.*
 			       from (
-			              select  *  from t_shoping_member 
+			              select  *  from member
 			              where to_char(joinDate,'yyyy-mm-dd')  between #{beginDate} and #{endDate}
 			                <if test="search_type=='member_id'">
 			                  AND member_id=#{search_word}
@@ -47,25 +48,25 @@
 			                  AND member_name=#{search_word}
 			                </if>
 			                <if test="search_type=='member_hp_num'">
-			                   AND hp1||hp2||hp3=#{search_word} 
+			                   AND hp1||hp2||hp3=#{search_word}
 			                </if>
 			              order by joinDate desc
 					    ) t
-				)							
-			where				
-		recNum between (#{chapter}-1)*100+ (#{pageNum}-1)*10+1 and (#{chapter}-1)*100+(#{pageNum})*10				        
+				)
+			where
+		recNum between (#{chapter}-1)*100+ (#{pageNum}-1)*10+1 and (#{chapter}-1)*100+(#{pageNum})*10
 	</select>
 	
     <select id="memberDetail" resultMap="memberResult"   parameterType="String"  >
 	    <![CDATA[
-		    select * from t_shoping_member
+		    select * from member
             where member_id=#{member_id}
     	]]>
 	</select>	
 	
 
 	<update id="modifyMemberInfo" parameterType="java.util.HashMap">
-	   update t_shoping_member
+	   update member
 			   <set>
 			      <if test=" member_pw!='' and member_pw!=null">
 			        member_pw=#{member_pw},
@@ -121,8 +122,8 @@
 			      <if test=" jibunAddress!='' and jibunAddress!=null">
 			         jibunAddress=#{jibunAddress},
 			      </if>
-			      <if test=" namujiAddress!='' and namujiAddress!=null">
-			         namujiAddress=#{namujiAddress}
+			      <if test=" detailAddress!='' and detailAddress!=null">
+					  detailAddress=#{detailAddress}
 			      </if>
 			      <if test=" del_yn!='' and del_yn!=null">
 			         del_yn=#{del_yn}
