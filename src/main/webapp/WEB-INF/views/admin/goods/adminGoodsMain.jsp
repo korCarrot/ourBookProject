@@ -9,6 +9,26 @@
 <head>
 <meta charset="utf-8">
 <script>
+	function removeGoods(goods_id) {
+		$.ajax({
+			type : "post",
+			async : true, //false인 경우 동기식으로 처리한다.
+			url : "${contextPath}/admin/goods/removeGoods.do",
+			data: {goods_id:goods_id},
+			success : function(data, textStatus) {
+				alert("상품을 삭제했습니다!!");
+				window.location.href = "${contextPath}/admin/goods/adminGoodsMain.do";
+			},
+			error : function(data, textStatus) {
+				alert("에러가 발생했습니다."+textStatus);
+			},
+			complete : function(data, textStatus) {
+				//alert("작업을완료 했습니다");
+
+			}
+		}); //end ajax
+	}
+
 function search_goods_list(fixeSearchPeriod){
 	var formObj=document.createElement("form");
 	var i_fixedSearch_period = document.createElement("input");
@@ -242,9 +262,9 @@ function  calcPeriod(search_period){
 					</strong>
 				</td>
 				 <td>
-					 <a href="${pageContext.request.contextPath}/admin/goods/removeGoods.do?goods_id=${item.goods_id}">
-					 상품 삭제
-					 </a>
+<%--				<a href="${pageContext.request.contextPath}/admin/goods/removeGoodsID.do?goods_id=${item.goods_id}">--%>
+					 <input  type="button" value="상품 삭제"  onClick="removeGoods('${item.goods_id}')"/>
+<%--				 </a>--%>
 				 </td>
 				
 			</TR>

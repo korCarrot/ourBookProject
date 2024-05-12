@@ -82,6 +82,6 @@ public class AdminGoodsServiceImpl implements AdminGoodsService {
 
 	@Override
 	public void removeGoods(String goods_id) throws Exception {
-//		adminGoodsDAO
+		adminGoodsDAO.removeGoods(goods_id);
 	}
 }

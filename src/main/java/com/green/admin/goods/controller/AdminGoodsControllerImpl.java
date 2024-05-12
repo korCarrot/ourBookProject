@@ -11,7 +11,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,7 +34,7 @@ public class AdminGoodsControllerImpl extends BaseController  implements AdminGo
 	private AdminGoodsService adminGoodsService;
 
 	//관리자 페이지
-	@RequestMapping(value="/adminGoodsMain.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value="/adminGoodsMain.do" ,method={RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView adminGoodsMain(@RequestParam Map<String, String> dateMap,
 			                           HttpServletRequest request, HttpServletResponse response)  throws Exception {
 		String viewName=getViewName(request);
@@ -311,6 +310,7 @@ public class AdminGoodsControllerImpl extends BaseController  implements AdminGo
 			e.printStackTrace();
 		}
 	}
+
 
 //	등록 상품 삭제
 	@Override
